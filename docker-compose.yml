@@ -1,0 +1,11 @@
+version: '3'
+services:
+  search-api:
+    build: 
+      context: app/SearchAPI
+    ports:
+      - "8081:80"
+    networks:
+      - fams-integration
+networks: 
+  fams-integration:

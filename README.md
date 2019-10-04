@@ -6,12 +6,27 @@
 - Message Broker has not been chosen, likely RabbitMQ
 - All projects should have a corresponding test project
 
+## Project Structure
+
+    .
+    ├── app                     # Application Source Files
+    ├── .gitignore              # Git ignore
+    ├── docker-compose.yml      # Docker Compose definition
+    └── README.md               # This file
+
+## Run
+
+```bash
+docker-compose up
+```
+Check the health status of the api [here](http://localhost:8081/health)
+
 ## Projects
 
-### Search API
+### SearchAPI
 
 _This is the API that will be called by dynamics to search for person sought_
 
-### Search API Test
+### SearchAPI.Test
 
 _This is the test project for the Search API project_
