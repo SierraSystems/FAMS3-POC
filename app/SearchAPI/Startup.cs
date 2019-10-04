@@ -34,7 +34,7 @@ namespace SearchAPI
                 // configure swagger properties
                 config.PostProcess = document =>
                 {
-                    document.Info.Version = "V1";
+                    document.Info.Version = "V0";
                     document.Info.Description = "For Search";
                     document.Info.Title = AppDomain.CurrentDomain.FriendlyName;
                 };
