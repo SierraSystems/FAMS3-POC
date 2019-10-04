@@ -27,6 +27,18 @@ namespace SearchAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddHealthChecks();
+
+            // Register NSwag services
+            services.AddSwaggerDocument(config =>
+            {
+                // configure swagger properties
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "V0";
+                    document.Info.Description = "For Search";
+                    document.Info.Title = AppDomain.CurrentDomain.FriendlyName;
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +52,10 @@ namespace SearchAPI
             app.UseMvc();
 
             app.UseHealthChecks("/health");
+
+            // Register the swagger generator middleware
+            app.UseOpenApi();
+
         }
     }
 }

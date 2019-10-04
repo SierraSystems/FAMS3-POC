@@ -21,6 +21,8 @@ docker-compose up
 ```
 Check the health status of the api [here](http://localhost:8081/health)
 
+Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.json)
+
 ## Projects
 
 ### SearchAPI
