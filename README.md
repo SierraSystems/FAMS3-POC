@@ -19,7 +19,7 @@
 ```bash
 docker-compose up
 ```
-Access the search api [here](http://localhost:8081/api/values)
+Check the health status of the api [here](http://localhost:8081/health)
 
 ## Projects
 
