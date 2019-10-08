@@ -25,6 +25,8 @@ Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.j
 
 Access RabbitMq console [here](http://localhost:15672), use default rabbitmq username and password.
 
+Access Redis-Commander [here](http://localhost:8090) to access Redis data.
+
 ## Projects
 
 ### SearchAPI
