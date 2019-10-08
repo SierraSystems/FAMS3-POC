@@ -27,8 +27,16 @@ Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.j
 
 ### SearchAPI
 
-_This is the API that will be called by dynamics to search for person sought_
+_This is the API that will be called by the Scheduler Plugin to search for person sought_
 
 ### SearchAPI.Test
 
 _This is the test project for the Search API project_
+
+### JobManager
+
+_This is the  Scheduler Plugin_
+
+### JobManager.Test
+
+_This is the test project for the  Scheduler Plugin_
