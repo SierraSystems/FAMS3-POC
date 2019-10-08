@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAPI.Test", "SearchAPI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobManager", "JobManager\JobManager.csproj", "{AFA2CC6F-EF2A-406E-8D3D-A551F90AC551}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobManager.Test", "JobManager.Test\JobManager.Test.csproj", "{A3FA1F9E-78CC-4843-84A1-CEF7CA520C5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AFA2CC6F-EF2A-406E-8D3D-A551F90AC551}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFA2CC6F-EF2A-406E-8D3D-A551F90AC551}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFA2CC6F-EF2A-406E-8D3D-A551F90AC551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3FA1F9E-78CC-4843-84A1-CEF7CA520C5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3FA1F9E-78CC-4843-84A1-CEF7CA520C5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3FA1F9E-78CC-4843-84A1-CEF7CA520C5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3FA1F9E-78CC-4843-84A1-CEF7CA520C5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
