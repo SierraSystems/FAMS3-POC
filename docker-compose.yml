@@ -11,7 +11,7 @@ services:
       always
     networks:
       - fams-integration
-    depends-on:
+    depends_on:
       - rabbitmq
 
   ####################### RABBITMQ SERVER ######################################
