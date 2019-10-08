@@ -23,6 +23,8 @@ Check the health status of the api [here](http://localhost:8081/health)
 
 Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.json)
 
+Access RabbitMq console [here](http://localhost:15672), use default rabbitmq username and password.
+
 ## Projects
 
 ### SearchAPI

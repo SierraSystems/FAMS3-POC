@@ -1,11 +1,35 @@
 version: '3'
 services:
+
+  ####################### SEARCH API ###########################################
   search-api:
     build: 
       context: app/SearchAPI
     ports:
       - "8081:80"
+    restart:
+      always
     networks:
       - fams-integration
+    depends-on:
+      - rabbitmq
+
+  ####################### RABBITMQ SERVER ######################################
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+        - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
+    restart: always
+    networks:
+      - fams-integration
+
 networks: 
   fams-integration:
+
+volumes:
+  data-rabbit:
