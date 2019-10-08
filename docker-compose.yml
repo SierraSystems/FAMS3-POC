@@ -13,6 +13,7 @@ services:
       - fams-integration
     depends_on:
       - rabbitmq
+      - redis
 
   ####################### RABBITMQ SERVER ######################################
   rabbitmq:
@@ -28,8 +29,37 @@ services:
     networks:
       - fams-integration
 
+  ####################### REDIS SERVER ########################################
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server --requirepass admin
+    ports:
+      - "6379:6379"
+    volumes:
+      - data-redis:/data
+    restart: always
+    networks:
+      - fams-integration
+
+  ####################### REDIS COMMANDER ######################################
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    ports:
+      - "8090:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:admin
+    networks:
+      - fams-integration
+    depends_on:
+      - redis
+
 networks: 
   fams-integration:
 
 volumes:
   data-rabbit:
+  data-redis:
