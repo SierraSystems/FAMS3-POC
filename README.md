@@ -9,16 +9,18 @@
 ## Project Structure
 
     .
-    ├── app                     # Application Source Files
-    ├── .gitignore              # Git ignore
-    ├── docker-compose.yml      # Docker Compose definition
-    └── README.md               # This file
+    ├── app                     # Application Source Files.
+    ├── docs                    # Contains application documentations.
+    ├── .gitignore              # Git ignore.
+    ├── docker-compose.yml      # Docker Compose definition.
+    └── README.md               # This file.
 
 ## Run
 
 ```bash
 docker-compose up
 ```
+
 Check the health status of the api [here](http://localhost:8081/health)
 
 Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.json)
@@ -26,6 +28,8 @@ Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.j
 Access RabbitMq console [here](http://localhost:15672), use default rabbitmq username and password.
 
 Access Redis-Commander [here](http://localhost:8090) to access Redis data.
+
+You can interact with the search api using the following [Postman Collection](docs/BcGovSearchApi.postman_collection.json) and [Postman Environment](docs/BcGovApi.postman_environment.json)
 
 ## Projects
 
