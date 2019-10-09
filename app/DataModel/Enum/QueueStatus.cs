@@ -10,4 +10,12 @@ namespace DataModel.Enum
         SearchInProgress=1,
         SearchCompleted=2
     }
+
+    public static class QueueStatusExtensions
+    {
+        public static string GetName(this QueueStatus queryStatus)
+        {
+            return System.Enum.GetName(typeof(QueueStatus), queryStatus);
+        }
+    }
 }

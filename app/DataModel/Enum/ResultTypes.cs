@@ -11,4 +11,12 @@ namespace DataModel.Enum
         Investment,
         BankAccounts
     }
+
+    public static class ResultTypesExtensions
+    {
+        public static string GetName(this ResultTypes resultType)
+        {
+            return System.Enum.GetName(typeof(ResultTypes), resultType);
+        }
+    }
 }

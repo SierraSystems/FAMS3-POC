@@ -10,5 +10,7 @@ namespace DataModel.Models
         public ResultTypes Type { get; set; }
         public string Provider { get; set; }
         public T Value { get; set; }
+
+       
     }
 }
