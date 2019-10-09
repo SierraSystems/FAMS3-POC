@@ -59,6 +59,7 @@ services:
 
 networks: 
   fams-integration:
+    driver: bridge
 
 volumes:
   data-rabbit:
