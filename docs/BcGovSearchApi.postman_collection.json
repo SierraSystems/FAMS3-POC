@@ -1,0 +1,64 @@
+{
+	"info": {
+		"_postman_id": "6dac3999-7ab8-49a3-9921-9833b6575ad4",
+		"name": "BcGovSearchApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Search Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7fc1dd1d-018d-4cdb-87e8-9e8d965a76c4",
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.test(\"Your test name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.searchRequestId).to.not.be.null;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base-api}}/people/search",
+					"host": [
+						"{{base-api}}"
+					],
+					"path": [
+						"people",
+						"search"
+					]
+				},
+				"description": "Creates a search People request"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
