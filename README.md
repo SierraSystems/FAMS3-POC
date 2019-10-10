@@ -1,5 +1,7 @@
 # FAMS3 Integration
 
+The `SearchApi` takes a piece of information from a person and will execute a `search` against data providers.
+
 ## Note
 
 - Projects are to be based on .NET Core 2.2
@@ -31,6 +33,8 @@ Access Redis-Commander [here](http://localhost:8090) to access Redis data.
 
 You can interact with the search api using the following [Postman Collection](docs/BcGovSearchApi.postman_collection.json) and [Postman Environment](docs/BcGovApi.postman_environment.json)
 
+When a POST request is send to the people api, a message is send the the `InvestigatePerson` exchange
+
 ## Projects
 
 ### SearchAPI
@@ -48,3 +52,9 @@ _This is the  Scheduler Plugin_
 ### JobManager.Test
 
 _This is the test project for the  Scheduler Plugin_
+
+## Libs
+
+### SearchApi.Core
+
+This class lib project encapsulate reusable components accross search api applications.

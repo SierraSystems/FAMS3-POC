@@ -1,4 +1,4 @@
-﻿namespace SearchAPI.Options
+﻿namespace SearchApi.Core.Options
 {
     /// <summary>
     /// Represents the RabbitMq Configuration
