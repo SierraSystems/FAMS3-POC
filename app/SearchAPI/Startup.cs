@@ -30,7 +30,10 @@ namespace SearchAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
             services.AddHealthChecks();
 
             // Register NSwag services
@@ -45,7 +48,13 @@ namespace SearchAPI
                 };
             });
 
-            var rabbitMqSettings = Configuration.GetSection(nameof(RabbitMqOptions)).Get<RabbitMqOptions>();
+            ConfigureServiceBus(services);
+        }
+
+        private void ConfigureServiceBus(IServiceCollection services)
+        {
+            var rabbitMqSettings = Configuration.GetSection(nameof(RabbitMq)).Get<RabbitMq>();
+            var rabbitBaseUri = $"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}";
 
             // Register Mass Transit
             services.AddMassTransit(x =>
@@ -53,7 +62,7 @@ namespace SearchAPI
                 // Add RabbitMq Service Bus
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    cfg.Host(new Uri($"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}/"), hostConfigurator =>
+                    cfg.Host(new Uri(rabbitBaseUri), hostConfigurator =>
                     {
                         hostConfigurator.Username(rabbitMqSettings.Username);
                         hostConfigurator.Password(rabbitMqSettings.Password);
@@ -62,8 +71,7 @@ namespace SearchAPI
             });
 
             // Add specific endpoint to route Investigate Person orders
-            EndpointConvention.Map<InvestigatePerson>(new Uri($"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}/{nameof(InvestigatePerson)}"));
-
+            EndpointConvention.Map<InvestigatePerson>(new Uri($"{rabbitBaseUri}/{nameof(InvestigatePerson)}"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,8 +81,6 @@ namespace SearchAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            
 
             app.UseMvc();
 

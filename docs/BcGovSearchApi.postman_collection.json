@@ -6,58 +6,122 @@
 	},
 	"item": [
 		{
-			"name": "Create Search Request",
-			"event": [
+			"name": "PeopleApi",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"id": "7fc1dd1d-018d-4cdb-87e8-9e8d965a76c4",
-						"exec": [
-							"pm.test(\"Status code is 202\", function () {",
-							"    pm.response.to.have.status(202);",
-							"});",
-							"",
-							"pm.test(\"Your test name\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.searchRequestId).to.not.be.null;",
-							"});"
+					"name": "Create Search Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7fc1dd1d-018d-4cdb-87e8-9e8d965a76c4",
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.searchRequestId).to.not.be.null;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
 						],
-						"type": "text/javascript"
-					}
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api}}/api/people/search",
+							"host": [
+								"{{base-api}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"search"
+							]
+						},
+						"description": "Creates a search People request"
+					},
+					"response": []
 				}
 			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "HealthApi",
+			"item": [
+				{
+					"name": "Create Search Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7fc1dd1d-018d-4cdb-87e8-9e8d965a76c4",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base-api}}/people/search",
-					"host": [
-						"{{base-api}}"
 					],
-					"path": [
-						"people",
-						"search"
-					]
-				},
-				"description": "Creates a search People request"
-			},
-			"response": []
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-api}}/health",
+							"host": [
+								"{{base-api}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Creates a search People request"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"protocolProfileBehavior": {}
