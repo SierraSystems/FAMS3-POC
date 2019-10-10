@@ -25,9 +25,9 @@ namespace SearchAPI.Models
         /// Creates a new PeopleSearchResponse
         /// </summary>
         /// <returns></returns>
-        public static PeopleSearchResponse Create()
+        public static PeopleSearchResponse Create(Guid requestId)
         {
-            return new PeopleSearchResponse(Guid.NewGuid());
+            return new PeopleSearchResponse(requestId);
         }
 
     }
