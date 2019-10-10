@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
@@ -16,11 +17,11 @@ namespace SearchAPI.Controllers
     public class PeopleController : ControllerBase
     {
 
-        private readonly IBus _bus;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
 
-        public PeopleController(IBus bus)
+        public PeopleController(ISendEndpointProvider sendEndpointProvider)
         {
-            this._bus = bus;
+            this._sendEndpointProvider = sendEndpointProvider;
         }
 
 
@@ -39,7 +40,7 @@ namespace SearchAPI.Controllers
         {
             var investigatePerson = InvestigatePerson.Create();
 
-            await this._bus.Send<InvestigatePerson>(investigatePerson);
+            await this._sendEndpointProvider.Send(investigatePerson);
 
             return await Task.FromResult(Accepted(PeopleSearchResponse.Create(investigatePerson.OrderId)));
         }
