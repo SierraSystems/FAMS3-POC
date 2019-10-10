@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SearchApi.Tracker": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
