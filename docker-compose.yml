@@ -20,6 +20,18 @@ services:
       - rabbitmq
       - redis
 
+  ####################### SEARCH TRACKER #########################################
+  search-tracker:
+    build: 
+      context: app/SearchApi.Tracker
+    restart:
+      always
+    networks:
+      - fams-integration
+    depends_on:
+      - rabbitmq
+      - redis
+
   ####################### RABBITMQ SERVER ######################################
   rabbitmq:
     image: rabbitmq:3.7.15-management
