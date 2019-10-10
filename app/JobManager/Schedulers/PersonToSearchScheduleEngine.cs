@@ -6,9 +6,9 @@ using System.Collections.Specialized;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobManager.Scheduler
+namespace JobManager.Schedulers
 {
-    public class Scheduler
+    public  class PersonToSearchScheduleEngine
     {
         public  async Task <IScheduler> CreateScheduler()
         {
