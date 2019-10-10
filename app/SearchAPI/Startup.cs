@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SearchAPI.Models;
+using SearchAPI.Options;
 
 namespace SearchAPI
 {
@@ -44,22 +45,24 @@ namespace SearchAPI
                 };
             });
 
+            var rabbitMqSettings = Configuration.GetSection(nameof(RabbitMqOptions)).Get<RabbitMqOptions>();
+
             // Register Mass Transit
             services.AddMassTransit(x =>
             {
-                // Add Service Bus to allow publishing messages
+                // Add RabbitMq Service Bus
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
-                    cfg.Host(new Uri("rabbitmq://localhost:5672/"), hostConfigurator =>
+                    cfg.Host(new Uri($"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}/"), hostConfigurator =>
                     {
-                        hostConfigurator.Username("guest");
-                        hostConfigurator.Password("guest");
+                        hostConfigurator.Username(rabbitMqSettings.Username);
+                        hostConfigurator.Password(rabbitMqSettings.Password);
                     });
                 }));
             });
 
-            // Add specific route for the Investigate Person orders
-            EndpointConvention.Map<InvestigatePerson>(new Uri("rabbitmq://localhost:5672/person.investigate_person"));
+            // Add specific endpoint to route Investigate Person orders
+            EndpointConvention.Map<InvestigatePerson>(new Uri($"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}/{nameof(InvestigatePerson)}"));
 
         }
 
@@ -70,6 +73,8 @@ namespace SearchAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            
 
             app.UseMvc();
 
