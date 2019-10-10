@@ -42,7 +42,7 @@ namespace SearchAPI.Controllers
 
             await this._sendEndpointProvider.Send(investigatePerson);
 
-            return await Task.FromResult(Accepted(PeopleSearchResponse.Create(investigatePerson.OrderId)));
+            return Accepted(PeopleSearchResponse.Create(investigatePerson.OrderId));
         }
 
 
