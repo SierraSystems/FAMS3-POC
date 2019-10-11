@@ -22,3 +22,5 @@ WORKDIR /app
 ARG PROJECT_NAME
 ENV DLL_NAME="${PROJECT_NAME}.dll"
 COPY --from=publish /app .
+
+ENTRYPOINT ["sh","-c","dotnet ${DLL_NAME}"]
