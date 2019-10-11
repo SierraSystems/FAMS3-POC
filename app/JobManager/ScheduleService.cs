@@ -17,18 +17,19 @@ namespace JobManager
             factory = _factory;
             trigger = _trigger;
         }
-        public async void Start()
+        public async Task<bool>  Start()
         {
-            var sched = await factory.CreateScheduler();
-            await sched.Start();
+            var _schedulerService = await factory.CreateScheduler();
+            await _schedulerService.Start();
 
-            await sched.ScheduleJob(PersonToSearchJobDetail.CreateJobDetail(),trigger.CreateTrigger());
+            await _schedulerService.ScheduleJob(PersonToSearchJobDetail.CreateJobDetail(),trigger.CreateTrigger());
+            return _schedulerService.IsStarted;
 
         }
     }
 
     public interface IScheduleService
     {
-        void Start();
+        Task<bool> Start();
     }
 }

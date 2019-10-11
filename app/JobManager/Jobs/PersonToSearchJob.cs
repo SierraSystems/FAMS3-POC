@@ -21,7 +21,4 @@ namespace JobManager.Jobs
         public static  IJobDetail CreateJobDetail() => JobBuilder.Create<PersonToSearchJob>().WithIdentity(typeof(PersonToSearchJob).Name, "FAMS3").Build();
 
     }
-
-    
-
 }
