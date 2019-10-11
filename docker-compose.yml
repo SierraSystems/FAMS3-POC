@@ -4,12 +4,17 @@ services:
   ####################### SEARCH API ###########################################
   search-api:
     build: 
-      context: app/SearchAPI
+      context: app
+      args:
+        PROJECT_NAME: SearchAPI
     environment:
       RABBITMQ__HOST: rabbitmq
       RABBITMQ__PORT: 5672
       RABBITMQ__USERNAME: guest
       RABBITMQ__PASSWORD: guest
+    entrypoint: 
+      - dotnet
+      - SearchAPI.dll
     ports:
       - "8081:80"
     restart:
@@ -20,10 +25,20 @@ services:
       - rabbitmq
       - redis
 
-  ####################### SEARCH TRACKER #########################################
-  search-tracker:
+  ####################### SEARCH TRACKER #######################################
+  search-api-tracker:
     build: 
-      context: app/SearchApi.Tracker
+      context: app
+      args:
+        PROJECT_NAME: SearchApi.Tracker
+    environment:
+      RABBITMQ__HOST: rabbitmq
+      RABBITMQ__PORT: 5672
+      RABBITMQ__USERNAME: guest
+      RABBITMQ__PASSWORD: guest
+    entrypoint: 
+      - dotnet
+      - SearchApi.Tracker.dll
     restart:
       always
     networks:
