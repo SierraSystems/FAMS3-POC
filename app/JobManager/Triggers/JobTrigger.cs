@@ -1,22 +1,27 @@
-﻿using JobManager.Job;
+﻿using JobManager.Jobs;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JobManager.Trigger
+namespace JobManager.Triggers
 {
-    public class JobTrigger<T>
+    public class PersonToSearchTrigger<T> : IJobTrigger<T>
     {
         public ITrigger CreateTrigger()
         {
             return TriggerBuilder.Create()
-                .WithIdentity(typeof(T).Assembly.GetName().Name, "FAMS3")
+                .WithIdentity(string.Concat(typeof(T).Name,"-Trigger"), "FAMS3")
                 .WithCronSchedule("0 0/2 * * * ?")
                 .Build();
         }
 
 
       
+    }
+
+    public interface IJobTrigger<T>
+    {
+        ITrigger CreateTrigger();
     }
 }
