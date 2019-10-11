@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.Features;
+using Newtonsoft.Json;
 
-namespace SearchAPI.Models
+namespace SearchApi.Core.Contracts
 {
     /// <summary>
     /// Represent an order to investigate on a person
     /// </summary>
     public class InvestigatePerson
     {
+        [JsonConstructor]
         private InvestigatePerson(Guid orderId)
         {
             this.OrderId = orderId;

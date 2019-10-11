@@ -1,9 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Builders;
-using SearchAPI.Models;
+using SearchApi.Core.Contracts;
 
-namespace SearchAPI.Test.Models
+namespace SearchApi.Core.Test.Contracts
 {
     public class InvestigatePersonTest
     {
