@@ -5,8 +5,12 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
 ## Note
 
 - Projects are to be based on .NET Core 2.2
-- Message Broker has not been chosen, likely RabbitMQ
+- Message Broker is rabbitMq
 - All projects should have a corresponding test project
+
+## Architecture Goal
+
+![image](docs/searchapi.flow.png)
 
 ## Project Structure
 
