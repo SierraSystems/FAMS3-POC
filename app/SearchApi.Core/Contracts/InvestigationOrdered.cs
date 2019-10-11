@@ -2,8 +2,8 @@
 
 namespace SearchApi.Core.Contracts
 {
-    public interface InvestigationOrdered
+    public class InvestigationOrdered
     {
-        Guid SearchRequestId { get; }
+        public Guid SearchRequestId { get; set; }
     }
 }

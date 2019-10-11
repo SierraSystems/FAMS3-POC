@@ -14,7 +14,7 @@ namespace SearchApi.Tracker.Tracking
 
             Event(() => InvestigationOrdered, 
                 x => x.CorrelateById(investigation => investigation.CorrelationId, context => context.Message.SearchRequestId)
-                .SelectId(context => Guid.NewGuid()));
+                .SelectId(context => context.Message.SearchRequestId));
 
             InstanceState(x => x.CurrentState);
 
