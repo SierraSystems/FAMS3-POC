@@ -1,9 +1,8 @@
-version: '3'
+version: "3"
 services:
-
   ####################### SEARCH API ###########################################
   search-api:
-    build: 
+    build:
       context: app
       args:
         PROJECT_NAME: SearchAPI
@@ -12,13 +11,9 @@ services:
       RABBITMQ__PORT: 5672
       RABBITMQ__USERNAME: guest
       RABBITMQ__PASSWORD: guest
-    entrypoint: 
-      - dotnet
-      - SearchAPI.dll
     ports:
       - "8081:80"
-    restart:
-      always
+    restart: always
     networks:
       - fams-integration
     depends_on:
@@ -27,7 +22,7 @@ services:
 
   ####################### SEARCH TRACKER #######################################
   search-api-tracker:
-    build: 
+    build:
       context: app
       args:
         PROJECT_NAME: SearchApi.Tracker
@@ -36,11 +31,7 @@ services:
       RABBITMQ__PORT: 5672
       RABBITMQ__USERNAME: guest
       RABBITMQ__PASSWORD: guest
-    entrypoint: 
-      - dotnet
-      - SearchApi.Tracker.dll
-    restart:
-      always
+    restart: always
     networks:
       - fams-integration
     depends_on:
@@ -56,7 +47,7 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-        - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
+      - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
     restart: always
     networks:
       - fams-integration
@@ -89,7 +80,7 @@ services:
     depends_on:
       - redis
 
-networks: 
+networks:
   fams-integration:
     driver: bridge
 
