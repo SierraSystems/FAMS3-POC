@@ -6,9 +6,9 @@ using System.Collections.Specialized;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JobManager.Schedulers
+namespace JobManager.SchedulerFactory
 {
-    public  class PersonToSearchScheduleEngine
+    public  class FAMSScheduleFactory : IFAMSScheduleFactory
     {
         public  async Task <IScheduler> CreateScheduler()
         {
@@ -19,5 +19,10 @@ namespace JobManager.Schedulers
 
             return  await factory.GetScheduler();
         }
+    }
+
+    public interface IFAMSScheduleFactory
+    {
+        Task<IScheduler> CreateScheduler();
     }
 }
