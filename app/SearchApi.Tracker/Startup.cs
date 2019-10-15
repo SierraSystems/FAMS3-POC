@@ -3,9 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using SearchApi.Core.Options;
 using System;
-using System.IO;
 using MassTransit.Saga;
-using SearchApi.Core.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using SearchApi.Tracker.Db;
 using SearchApi.Tracker.Tracking;
 
 namespace SearchApi.Tracker
@@ -25,9 +26,20 @@ namespace SearchApi.Tracker
 
             IConfiguration configuration = builder.Build();
 
+            ConfigureDbContext(services, configuration);
 
             ConfigureServiceBus(services, configuration);
 
+        }
+
+        public static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddEntityFrameworkNpgsql()
+                .AddDbContext<StateMachineContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("StateMachineContext")),
+                    ServiceLifetime.Singleton, 
+                    ServiceLifetime.Singleton);
         }
 
         private static void ConfigureServiceBus(IServiceCollection services, IConfiguration configuration)
@@ -61,5 +73,6 @@ namespace SearchApi.Tracker
                 }));
             });
         }
+
     }
 }

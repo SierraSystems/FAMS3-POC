@@ -18,7 +18,7 @@ services:
       - fams-integration
     depends_on:
       - rabbitmq
-      - redis
+      - postgres
 
   ####################### SEARCH TRACKER #######################################
   search-api-tracker:
@@ -36,7 +36,7 @@ services:
       - fams-integration
     depends_on:
       - rabbitmq
-      - redis
+      - postgres
 
   ####################### RABBITMQ SERVER ######################################
   rabbitmq:
@@ -52,33 +52,25 @@ services:
     networks:
       - fams-integration
 
-  ####################### REDIS SERVER ########################################
-  redis:
-    container_name: redis
-    image: redis
-    command: redis-server --requirepass admin
-    ports:
-      - "6379:6379"
-    volumes:
-      - data-redis:/data
+  ####################### POSTGRES SERVER ######################################
+  postgres:
+    image: postgres
     restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
     networks:
       - fams-integration
 
-  ####################### REDIS COMMANDER ######################################
-  redis-commander:
-    container_name: redis-commander
-    hostname: redis-commander
-    image: rediscommander/redis-commander:latest
+  ####################### POSTGRES ADMIN ######################################
+  omnidb:
+    image: taivokasper/omnidb
     restart: always
     ports:
-      - "8090:8081"
-    environment:
-      - REDIS_HOSTS=local:redis:6379:0:admin
+      - 8091:8080
+      - 25482:25482
     networks:
       - fams-integration
-    depends_on:
-      - redis
 
 networks:
   fams-integration:

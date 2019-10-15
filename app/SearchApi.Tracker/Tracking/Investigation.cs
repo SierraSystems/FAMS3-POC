@@ -1,5 +1,6 @@
 ﻿using System;
 using Automatonymous;
+using MassTransit.Testing;
 
 namespace SearchApi.Tracker.Tracking
 {
@@ -13,6 +14,8 @@ namespace SearchApi.Tracker.Tracking
         public String CurrentState { get; set; }
 
         public Guid SearchRequestId { get; set; }
+
+        public byte[] RowVersion { get; set; }
 
     }
 }
