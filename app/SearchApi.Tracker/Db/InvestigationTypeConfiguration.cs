@@ -9,7 +9,7 @@ namespace SearchApi.Tracker.Db
         public void Configure(EntityTypeBuilder<Investigation> builder)
         {
             builder.HasKey(x => x.CorrelationId);
-            builder.Property(x => x.RowVersion).IsRowVersion().IsRequired();
+            builder.ForNpgsqlUseXminAsConcurrencyToken();
         }
     }
 }

@@ -17,25 +17,12 @@ namespace SearchApi.Tracker
         {
             Console.WriteLine("Starting Search API Tracker");
 
-            var serviceProvider = CreateServiceProvider();
+            var serviceProvider = Startup.CreateServiceProvider();
 
             var bus = serviceProvider.GetService<IBusControl>();
+            
             _busHandle = TaskUtil.Await(() => bus.StartAsync());
 
         }
-
-        private static IServiceProvider CreateServiceProvider()
-        {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            Startup.ConfigureServices(serviceCollection);
-            return serviceCollection.BuildServiceProvider();
-        }
-
-        private class Factory : IDesignTimeDbContextFactory<StateMachineContext>
-        {
-            public StateMachineContext CreateDbContext(string[] args)
-                => CreateServiceProvider().GetService<StateMachineContext>();
-        }
-
     }
 }

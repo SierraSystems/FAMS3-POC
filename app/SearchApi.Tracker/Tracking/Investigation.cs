@@ -15,7 +15,5 @@ namespace SearchApi.Tracker.Tracking
 
         public Guid SearchRequestId { get; set; }
 
-        public byte[] RowVersion { get; set; }
-
     }
 }
