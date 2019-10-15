@@ -74,6 +74,21 @@ services:
       - 25482:25482
     networks:
       - fams-integration
+    depends_on:
+      - postgres    
+
+  ####################### JOB MANAGER API ###########################################
+  jobmanager:
+    build:
+      context: app
+      args:
+        PROJECT_NAME: JobManager
+    restart: always
+    networks:
+      - fams-integration
+    depends_on:
+      - search-api
+
 
 networks:
   fams-integration:
