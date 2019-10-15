@@ -15,11 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel.Test", "DataModel.Test\DataModel.Test.csproj", "{4F79A3F1-78AB-4173-85B4-F54CCFAD836D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchApi.Core", "SearchApi.Core\SearchApi.Core.csproj", "{C7D31E97-C646-490A-BD5E-AE8BE056A1BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi.Core", "SearchApi.Core\SearchApi.Core.csproj", "{C7D31E97-C646-490A-BD5E-AE8BE056A1BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchApi.Core.Test", "SearchApi.Core.Test\SearchApi.Core.Test.csproj", "{6926932C-E27C-4FDD-8D13-D93CE4CC0120}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi.Core.Test", "SearchApi.Core.Test\SearchApi.Core.Test.csproj", "{6926932C-E27C-4FDD-8D13-D93CE4CC0120}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchApi.Tracker", "SearchApi.Tracker\SearchApi.Tracker.csproj", "{0C0B8D97-5D44-4A43-8362-CFD28C10DB81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchApi.Tracker", "SearchApi.Tracker\SearchApi.Tracker.csproj", "{0C0B8D97-5D44-4A43-8362-CFD28C10DB81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchApi.Tracker.Test", "SearchApi.Tracker.Test\SearchApi.Tracker.Test.csproj", "{FDA77E02-73B0-4059-86D2-CF63A57492BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{0C0B8D97-5D44-4A43-8362-CFD28C10DB81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C0B8D97-5D44-4A43-8362-CFD28C10DB81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C0B8D97-5D44-4A43-8362-CFD28C10DB81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA77E02-73B0-4059-86D2-CF63A57492BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA77E02-73B0-4059-86D2-CF63A57492BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA77E02-73B0-4059-86D2-CF63A57492BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA77E02-73B0-4059-86D2-CF63A57492BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
