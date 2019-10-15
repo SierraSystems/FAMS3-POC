@@ -58,12 +58,6 @@ namespace SearchApi.Tracker
                         e.StateMachineSaga(investigationStateMachine, repository);
                     });
 
-
-                    cfg.ReceiveEndpoint(host, nameof(InvestigatePerson), e =>
-                    {
-                        e.Consumer<InvestigatePersonConsumer>();
-                    });
-
                 }));
             });
         }

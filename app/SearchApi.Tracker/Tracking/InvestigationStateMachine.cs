@@ -1,6 +1,7 @@
 ﻿using System;
 using Automatonymous;
 using SearchApi.Core.Contracts;
+using SearchApi.Core.Contracts.PersonSearch;
 
 namespace SearchApi.Tracker.Tracking
 {
@@ -12,21 +13,25 @@ namespace SearchApi.Tracker.Tracking
         public InvestigationStateMachine()
         {
 
-            Event(() => InvestigationOrdered, 
-                x => x.CorrelateById(investigation => investigation.CorrelationId, context => context.Message.SearchRequestId)
-                .SelectId(context => context.Message.SearchRequestId));
+            Event(() => SearchRequested , 
+                x => x.CorrelateById(searchRequested => searchRequested.CorrelationId, context => context.Message.CorrelationId)
+                .SelectId(context => context.Message.CorrelationId));
 
             InstanceState(x => x.CurrentState);
 
             Initially(
-                When(InvestigationOrdered)
-                    .Then(context => { context.Instance.SearchRequestId = context.Data.SearchRequestId; })
-                    .TransitionTo(SearchPathDetermined));
+                When(SearchRequested)
+                    .Then(context =>
+                    {
+                        context.Instance.SearchRequestId = context.Data.CorrelationId; 
+                        Console.WriteLine($"SearchRequeted: {context.Data.CorrelationId}");
+                    })
+                    .TransitionTo(Started));
 
         }
 
-        public Event<InvestigationOrdered> InvestigationOrdered { get; private set; }
+        public Event<SearchRequested> SearchRequested { get; private set; }
 
-        public State SearchPathDetermined { get; private set; }
+        public State Started { get; private set; }
     }
 }

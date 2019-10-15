@@ -62,8 +62,6 @@ namespace SearchAPI
                 }));
             });
 
-            // Add specific endpoint to route Investigate Person orders
-            EndpointConvention.Map<InvestigatePerson>(new Uri($"{rabbitBaseUri}/{nameof(InvestigatePerson)}"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
