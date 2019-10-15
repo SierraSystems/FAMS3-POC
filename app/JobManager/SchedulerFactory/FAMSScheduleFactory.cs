@@ -12,11 +12,7 @@ namespace JobManager.SchedulerFactory
     {
         public  async Task <IScheduler> CreateScheduler()
         {
-            NameValueCollection props = new NameValueCollection
-            {  { "quartz.serializer.type", "binary" } };
-
-            StdSchedulerFactory factory = new StdSchedulerFactory(props);
-
+            StdSchedulerFactory factory = new StdSchedulerFactory();
             return  await factory.GetScheduler();
         }
     }
