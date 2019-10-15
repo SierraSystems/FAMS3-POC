@@ -31,6 +31,7 @@ services:
       RABBITMQ__PORT: 5672
       RABBITMQ__USERNAME: guest
       RABBITMQ__PASSWORD: guest
+      CONNECTIONSTRINGS__STATEMACHINECONTEXT: Host=postgres;Database=state_machine;Username=admin;Password=admin
     restart: always
     networks:
       - fams-integration
