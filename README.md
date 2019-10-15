@@ -33,11 +33,12 @@ Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.j
 
 Access RabbitMq console [here](http://localhost:15672), use default rabbitmq username and password.
 
-Access Redis-Commander [here](http://localhost:8090) to access Redis data.
+Access OmniDb [here](http://localhost:8091), you can configure the tool to point to postgres using the `docker-compose.yml` options.
 
 You can interact with the search api using the following [Postman Collection](docs/BcGovSearchApi.postman_collection.json) and [Postman Environment](docs/BcGovApi.postman_environment.json)
 
-When a POST request is send to the people api, a message is send the the `InvestigatePerson` exchange
+When a POST request is send to the people api, a `searchRequested` event is sent to the tracker.
+The traker stores the `investigationState` in the StateMachine Database.
 
 ## Projects
 
