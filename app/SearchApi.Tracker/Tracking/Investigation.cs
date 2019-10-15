@@ -1,5 +1,6 @@
 ﻿using System;
 using Automatonymous;
+using MassTransit.Testing;
 
 namespace SearchApi.Tracker.Tracking
 {

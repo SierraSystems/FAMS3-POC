@@ -3,6 +3,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SearchApi.Core.Contracts;
+using SearchApi.Core.Contracts.PersonSearch;
 using SearchAPI.Models;
 
 namespace SearchAPI.Controllers
@@ -15,11 +16,11 @@ namespace SearchAPI.Controllers
     public class PeopleController : ControllerBase
     {
 
-        private readonly ISendEndpointProvider _sendEndpointProvider;
+        private readonly IBusControl _busControl;
 
-        public PeopleController(ISendEndpointProvider sendEndpointProvider)
+        public PeopleController(IBusControl busControl)
         {
-            this._sendEndpointProvider = sendEndpointProvider;
+            this._busControl = busControl;
         }
 
 
@@ -36,11 +37,11 @@ namespace SearchAPI.Controllers
         [ProducesResponseType(typeof(PeopleSearchResponse), StatusCodes.Status202Accepted)]
         public async Task<IActionResult> Search()
         {
-            var investigatePerson = InvestigatePerson.Create();
+            var searchRequested = SearchRequested.Create();
 
-            await this._sendEndpointProvider.Send(investigatePerson);
+            await this._busControl.Publish(searchRequested);
 
-            return Accepted(PeopleSearchResponse.Create(investigatePerson.OrderId));
+            return Accepted(PeopleSearchResponse.Create(searchRequested.CorrelationId));
         }
 
 

@@ -1,8 +1,10 @@
 ﻿using MassTransit;
 using System;
 using MassTransit.Util;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using SearchApi.Tracker.Db;
 
 namespace SearchApi.Tracker
 {
@@ -15,16 +17,12 @@ namespace SearchApi.Tracker
         {
             Console.WriteLine("Starting Search API Tracker");
 
-            var serviceCollection = new ServiceCollection();
-
-            Startup.ConfigureServices(serviceCollection);
-
-            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var serviceProvider = Startup.CreateServiceProvider();
 
             var bus = serviceProvider.GetService<IBusControl>();
+            
             _busHandle = TaskUtil.Await(() => bus.StartAsync());
 
         }
-
     }
 }
