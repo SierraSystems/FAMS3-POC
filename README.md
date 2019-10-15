@@ -27,6 +27,14 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
 docker-compose up
 ```
 
+Once the containers are up, execute the Entity Frameword migration
+
+```cmd
+> dotnet tool install --global dotnet-ef
+> cd app/SearchApi.Tracker
+> dotnet ef database update
+```
+
 Check the health status of the api [here](http://localhost:8081/health)
 
 Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.json)
