@@ -79,6 +79,18 @@ services:
       - fams-integration
     depends_on:
       - redis
+  ####################### JOB MANAGER API ###########################################
+  jobmanager:
+    build:
+      context: app
+      args:
+        PROJECT_NAME: JobManager
+    restart: always
+    networks:
+      - fams-integration
+    depends_on:
+      - search-api
+      - redis
 
 networks:
   fams-integration:
