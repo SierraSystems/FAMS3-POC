@@ -1,6 +1,7 @@
 ﻿using JobManager.Jobs;
 using JobManager.SchedulerFactory;
 using JobManager.Triggers;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,25 +12,39 @@ namespace JobManager
     public class ScheduleService : IScheduleService
     {
         private readonly IFAMSScheduleFactory factory;
+        private static  IScheduler _schedulerService;
         private readonly IJobTrigger<PersonToSearchJob> trigger;
-        public ScheduleService (IFAMSScheduleFactory _factory, IJobTrigger<PersonToSearchJob> _trigger )
+        public ScheduleService(IFAMSScheduleFactory _factory, IJobTrigger<PersonToSearchJob> _trigger, IScheduler SchedulerService)
         {
             factory = _factory;
             trigger = _trigger;
+            _schedulerService =  factory.CreateScheduler().Result;
         }
-        public async Task<bool>  Start()
+        //TODO : Refactor
+        public async void Start()
         {
-            var _schedulerService = await factory.CreateScheduler();
-            await _schedulerService.Start();
+            while (!_schedulerService.IsStarted)
+                await _schedulerService.Start();
+        }
 
-            await _schedulerService.ScheduleJob(PersonToSearchJobDetail.CreateJobDetail(),trigger.CreateTrigger());
-            return _schedulerService.IsStarted;
-
+        public IScheduler SchedulerService { get { return _schedulerService; } }
+        
+        public async Task<DateTimeOffset> Schedule()
+        {
+           return  await _schedulerService.ScheduleJob(PersonToSearchJobDetail.CreateJobDetail(), trigger.CreateTrigger());
+        }
+        public async void Stop()
+        {
+            while (!_schedulerService.IsShutdown)
+               await _schedulerService.Shutdown();
         }
     }
-
     public interface IScheduleService
     {
-        Task<bool> Start();
+        void Start();
+
+        Task<DateTimeOffset> Schedule();
+
+        void Stop();
     }
 }
