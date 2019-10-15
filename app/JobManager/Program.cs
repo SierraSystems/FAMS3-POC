@@ -8,6 +8,8 @@ using System;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
+using JobManager.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace JobManager
 {
@@ -45,7 +47,6 @@ namespace JobManager
             await scheduler.Start();
 
             Console.ReadKey();
-
         }
     }
 }

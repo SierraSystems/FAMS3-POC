@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using SearchApi.Core.Contracts;
+using SearchApi.Core.Options;
 
 namespace SearchAPI
 {
@@ -25,7 +22,10 @@ namespace SearchAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
             services.AddHealthChecks();
 
             // Register NSwag services
@@ -39,6 +39,31 @@ namespace SearchAPI
                     document.Info.Title = AppDomain.CurrentDomain.FriendlyName;
                 };
             });
+
+            ConfigureServiceBus(services);
+        }
+
+        private void ConfigureServiceBus(IServiceCollection services)
+        {
+            var rabbitMqSettings = Configuration.GetSection(nameof(RabbitMq)).Get<RabbitMq>();
+            var rabbitBaseUri = $"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}";
+
+            // Register Mass Transit
+            services.AddMassTransit(x =>
+            {
+                // Add RabbitMq Service Bus
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(new Uri(rabbitBaseUri), hostConfigurator =>
+                    {
+                        hostConfigurator.Username(rabbitMqSettings.Username);
+                        hostConfigurator.Password(rabbitMqSettings.Password);
+                    });
+                }));
+            });
+
+            // Add specific endpoint to route Investigate Person orders
+            EndpointConvention.Map<InvestigatePerson>(new Uri($"{rabbitBaseUri}/{nameof(InvestigatePerson)}"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,11 +1,89 @@
-version: '3'
+version: "3"
 services:
+  ####################### SEARCH API ###########################################
   search-api:
-    build: 
-      context: app/SearchAPI
+    build:
+      context: app
+      args:
+        PROJECT_NAME: SearchAPI
+    environment:
+      RABBITMQ__HOST: rabbitmq
+      RABBITMQ__PORT: 5672
+      RABBITMQ__USERNAME: guest
+      RABBITMQ__PASSWORD: guest
     ports:
       - "8081:80"
+    restart: always
     networks:
       - fams-integration
-networks: 
+    depends_on:
+      - rabbitmq
+      - redis
+
+  ####################### SEARCH TRACKER #######################################
+  search-api-tracker:
+    build:
+      context: app
+      args:
+        PROJECT_NAME: SearchApi.Tracker
+    environment:
+      RABBITMQ__HOST: rabbitmq
+      RABBITMQ__PORT: 5672
+      RABBITMQ__USERNAME: guest
+      RABBITMQ__PASSWORD: guest
+    restart: always
+    networks:
+      - fams-integration
+    depends_on:
+      - rabbitmq
+      - redis
+
+  ####################### RABBITMQ SERVER ######################################
+  rabbitmq:
+    image: rabbitmq:3.7.15-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - data-rabbit:/var/lib/rabbitmq/mnesia/rabbit@app-rabbitmq:cached
+    restart: always
+    networks:
+      - fams-integration
+
+  ####################### REDIS SERVER ########################################
+  redis:
+    container_name: redis
+    image: redis
+    command: redis-server --requirepass admin
+    ports:
+      - "6379:6379"
+    volumes:
+      - data-redis:/data
+    restart: always
+    networks:
+      - fams-integration
+
+  ####################### REDIS COMMANDER ######################################
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    ports:
+      - "8090:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:admin
+    networks:
+      - fams-integration
+    depends_on:
+      - redis
+
+networks:
   fams-integration:
+    driver: bridge
+
+volumes:
+  data-rabbit:
+  data-redis:
