@@ -3,15 +3,25 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using SearchApi.Core.Options;
 using System;
-using System.IO;
+using MassTransit.EntityFrameworkCoreIntegration;
+using MassTransit.EntityFrameworkCoreIntegration.Saga;
 using MassTransit.Saga;
-using SearchApi.Core.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using SearchApi.Tracker.Db;
 using SearchApi.Tracker.Tracking;
 
 namespace SearchApi.Tracker
 {
     public class Startup
     {
+        public static IServiceProvider CreateServiceProvider()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            Startup.ConfigureServices(serviceCollection);
+            return serviceCollection.BuildServiceProvider();
+        }
+
         public static void ConfigureServices(IServiceCollection services)
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -25,9 +35,20 @@ namespace SearchApi.Tracker
 
             IConfiguration configuration = builder.Build();
 
+            ConfigureDbContext(services, configuration);
 
             ConfigureServiceBus(services, configuration);
 
+        }
+
+        public static void ConfigureDbContext(IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddEntityFrameworkNpgsql()
+                .AddDbContext<StateMachineContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("StateMachineContext")),
+                    ServiceLifetime.Singleton, 
+                    ServiceLifetime.Singleton);
         }
 
         private static void ConfigureServiceBus(IServiceCollection services, IConfiguration configuration)
@@ -35,8 +56,9 @@ namespace SearchApi.Tracker
             var rabbitMqSettings = configuration.GetSection(nameof(RabbitMq)).Get<RabbitMq>();
             var rabbitBaseUri = $"amqp://{rabbitMqSettings.Host}:{rabbitMqSettings.Port}";
 
-
-            var repository = new InMemorySagaRepository<Investigation>();
+            var factory = new Factory();
+            ISagaDbContextFactory<Investigation> contextFactory = new DelegateSagaDbContextFactory<Investigation>(() => factory.CreateDbContext(Array.Empty<string>()));
+            var repository = new EntityFrameworkSagaRepository<Investigation>(contextFactory);
 
             // Register Mass Transit
             services.AddMassTransit(x =>
@@ -60,6 +82,13 @@ namespace SearchApi.Tracker
 
                 }));
             });
+        }
+
+
+        private class Factory : IDesignTimeDbContextFactory<StateMachineContext>
+        {
+            public StateMachineContext CreateDbContext(string[] args)
+                => CreateServiceProvider().GetService<StateMachineContext>();
         }
     }
 }

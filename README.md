@@ -27,17 +27,26 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
 docker-compose up
 ```
 
+Once the containers are up, execute the Entity Frameword migration
+
+```cmd
+> dotnet tool install --global dotnet-ef
+> cd app/SearchApi.Tracker
+> dotnet ef database update
+```
+
 Check the health status of the api [here](http://localhost:8081/health)
 
 Download OpenAPi specification [here](http://localhost:8081/swagger/v1/swagger.json)
 
 Access RabbitMq console [here](http://localhost:15672), use default rabbitmq username and password.
 
-Access Redis-Commander [here](http://localhost:8090) to access Redis data.
+Access OmniDb [here](http://localhost:8091), you can configure the tool to point to postgres using the `docker-compose.yml` options.
 
 You can interact with the search api using the following [Postman Collection](docs/BcGovSearchApi.postman_collection.json) and [Postman Environment](docs/BcGovApi.postman_environment.json)
 
-When a POST request is send to the people api, a message is send the the `InvestigatePerson` exchange
+When a POST request is send to the people api, a `searchRequested` event is sent to the tracker.
+The traker stores the `investigationState` in the StateMachine Database.
 
 ## Projects
 
