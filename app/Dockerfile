@@ -6,7 +6,13 @@ FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 
 ARG PROJECT_NAME
 
+RUN dotnet tool install --global dotnet-ef --version 2.2.6
+
 WORKDIR /src
+
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.6.0/wait /wait
+RUN chmod +x /wait
+
 COPY . .
 RUN dotnet restore "${PROJECT_NAME}/${PROJECT_NAME}.csproj"
 

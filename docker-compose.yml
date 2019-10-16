@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   ####################### SEARCH API ###########################################
   search-api:
@@ -39,6 +39,27 @@ services:
       - rabbitmq
       - postgres
 
+  ####################### DB MIGRATION #######################################
+  state-machine-migration:
+    build:
+      context: app
+      target: build
+      args:
+        PROJECT_NAME: SearchApi.Tracker
+    environment:
+      RABBITMQ__HOST: rabbitmq
+      RABBITMQ__PORT: 5672
+      RABBITMQ__USERNAME: guest
+      RABBITMQ__PASSWORD: guest
+      CONNECTIONSTRINGS__STATEMACHINECONTEXT: Host=postgres;Database=state_machine;Username=admin;Password=admin
+      WAIT_HOSTS: postgres:5432
+    command: sh -c "/wait && dotnet ef database update"
+    networks:
+      - fams-integration
+    depends_on:
+      - rabbitmq
+      - postgres
+
   ####################### RABBITMQ SERVER ######################################
   rabbitmq:
     image: rabbitmq:3.7.15-management
@@ -62,6 +83,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
+      POSTGRES_DB: state_machine
     networks:
       - fams-integration
 
