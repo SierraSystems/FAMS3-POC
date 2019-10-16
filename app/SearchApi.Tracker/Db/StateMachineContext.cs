@@ -13,6 +13,9 @@ namespace SearchApi.Tracker.Db
 
         public DbSet<Investigation> Investigations { get; set; }
 
+        // | firstNAme | lastname
+        // | true      | false
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

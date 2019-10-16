@@ -28,6 +28,7 @@ namespace SearchApi.Tracker.Tracking
                     })
                     .TransitionTo(Started));
 
+
         }
 
         public Event<SearchRequested> SearchRequested { get; private set; }
