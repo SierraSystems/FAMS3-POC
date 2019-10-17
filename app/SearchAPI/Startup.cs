@@ -24,7 +24,7 @@ namespace SearchAPI
         {
             services
                 .AddMvc(option => option.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             
             services.AddHealthChecks();
 
