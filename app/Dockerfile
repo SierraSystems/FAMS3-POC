@@ -1,12 +1,12 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-bionic AS build
 
 ARG PROJECT_NAME
 
-RUN dotnet tool install --global dotnet-ef --version 2.2.6
+RUN dotnet tool install --global dotnet-ef
 
 WORKDIR /src
 
