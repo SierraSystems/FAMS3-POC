@@ -3,11 +3,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using SearchApi.Core.Options;
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using MassTransit.EntityFrameworkCoreIntegration;
 using MassTransit.EntityFrameworkCoreIntegration.Saga;
 using MassTransit.Saga;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using SearchApi.Core.Providers;
 using SearchApi.Tracker.Db;
 using SearchApi.Tracker.Tracking;
 
@@ -30,8 +33,8 @@ namespace SearchApi.Tracker
             var builder = new ConfigurationBuilder()
                 .AddJsonFile($"appsettings.json", true, true)
                 .AddJsonFile($"appsettings.{environmentName}.json", true, true)
+                .AddJsonFile($"provider.configuration.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
-
 
             IConfiguration configuration = builder.Build();
 
@@ -67,7 +70,7 @@ namespace SearchApi.Tracker
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
 
-                    var investigationStateMachine = new InvestigationStateMachine();
+                    var investigationStateMachine = new InvestigationStateMachine(configuration.GetSection("providers").Get<List<Provider>>());
 
                     var host = cfg.Host(new Uri(rabbitBaseUri), hostConfigurator =>
                     {
