@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace SearchApi.Core.Providers
 {
@@ -9,36 +10,11 @@ namespace SearchApi.Core.Providers
     public class Provider
     {
 
-        protected Provider() { }
-
-        private Provider(Guid id, String name)
-        {
-            if(id == default(Guid)) throw new ArgumentNullException(nameof(id));
-            if(String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-
-            this.Id = id;
-            this.Name = name;
-        }
-
-        /// <summary>
-        /// Unique identifier of the Provider.
-        /// </summary>
-        public Guid Id { get; private set; }
-        
         /// <summary>
         /// The Name of the Providers.
         /// </summary>
-        public String Name { get; private set; }
+        public String Name { get; set; }
 
-        /// <summary>
-        /// Creates a new Provider
-        /// </summary>
-        /// <param name="name">The name of the provider</param>
-        /// <returns></returns>
-        public static Provider Create(string name)
-        {
-            return new Provider(Guid.NewGuid(), name);
-        }
 
     }
 }

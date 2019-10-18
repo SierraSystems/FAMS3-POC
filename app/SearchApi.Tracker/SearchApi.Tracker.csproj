@@ -63,4 +63,10 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="provider.configuration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
