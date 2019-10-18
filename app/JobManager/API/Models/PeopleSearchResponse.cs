@@ -14,5 +14,15 @@ namespace JobManager.API.Models
         [Required]
         [Description("The Unique Identifier of the request")]
         public Guid SearchRequestId { get; }
+
+        private PeopleSearchResponse(Guid searchRequestId)
+        {
+            this.SearchRequestId = searchRequestId;
+        }
+
+        public static PeopleSearchResponse Create(Guid requestId)
+        {
+            return new PeopleSearchResponse(requestId);
+        }
     }
 }

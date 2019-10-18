@@ -4,10 +4,7 @@ using JobManager.SchedulerFactory;
 using JobManager.Triggers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace JobManager.Test.Configuration
 {

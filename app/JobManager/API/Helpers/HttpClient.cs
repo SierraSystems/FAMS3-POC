@@ -25,11 +25,11 @@ namespace JobManager.API.Helpers
                 .GetAsync().ReceiveJson<T>();
         }
 
-        public async Task<T> Post<T>(string path, object payload = null, object headers = null,
-            object cookies = null, object queryParams = null)
+        public async Task<T> Post<T>(string baseUrl, string path, object payload = null, string key = null, object queryParams = null, object headers = null, object cookies = null)
         {
         
-                return  await new Url(path)
+                return  await new Url(baseUrl)
+                    .AppendPathSegment(path)
                     .SetQueryParams(queryParams ?? new { })
                     .WithClient(_client)
                     .WithTimeout(HttpRequestTimeout)
