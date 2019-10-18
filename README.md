@@ -4,7 +4,7 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
 
 ## Note
 
-- Projects are to be based on .NET Core 2.2
+- Projects are to be based on .NET Core 3.0
 - Message Broker is rabbitMq
 - All projects should have a corresponding test project
 
