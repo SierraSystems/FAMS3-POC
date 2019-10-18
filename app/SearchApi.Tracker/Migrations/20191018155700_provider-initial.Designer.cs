@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SearchApi.Tracker.Db;
@@ -9,9 +10,10 @@ using SearchApi.Tracker.Db;
 namespace SearchApi.Tracker.Migrations
 {
     [DbContext(typeof(StateMachineContext))]
-    partial class StateMachineContextModelSnapshot : ModelSnapshot
+    [Migration("20191018155700_provider-initial")]
+    partial class providerinitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
