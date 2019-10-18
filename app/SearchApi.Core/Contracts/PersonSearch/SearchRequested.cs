@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using SearchApi.Core.Models;
 
 namespace SearchApi.Core.Contracts.PersonSearch
 {
@@ -11,17 +12,19 @@ namespace SearchApi.Core.Contracts.PersonSearch
     {
 
         [JsonConstructor]
-        public SearchRequested()
+        public SearchRequested(PeopleSearchRequest peopleSearchRequest)
         {
             this.CorrelationId = Guid.NewGuid();
+            this.PeopleSearchRequest = peopleSearchRequest;
         }
 
         public Guid CorrelationId { get; }
+        public PeopleSearchRequest PeopleSearchRequest { get; }
 
 
-        public static SearchRequested Create()
+        public static SearchRequested Create(PeopleSearchRequest peopleSearchRequest)
         {
-            return new SearchRequested();
+            return new SearchRequested(peopleSearchRequest);
         } 
 
 

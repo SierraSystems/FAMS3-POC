@@ -10,6 +10,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using SearchAPI.Controllers;
 using SearchApi.Core.Contracts.PersonSearch;
+using SearchApi.Core.Models;
 using SearchAPI.Models;
 
 namespace SearchAPI.Test.Controllers
@@ -34,7 +35,7 @@ namespace SearchAPI.Test.Controllers
         [Test]
         public void with_valid_request_should_accept_request()
         {
-            var result = (AcceptedResult) sut.Search().Result;
+            var result = (AcceptedResult) sut.Search(new PeopleSearchRequest("test", "test", "test@example.com")).Result;
             _iBusControl.Verify(x => x.Publish(It.IsAny<SearchRequested>(), It.IsAny<CancellationToken>()), Times.Once);
             Assert.IsInstanceOf<PeopleSearchResponse>(result.Value);
             Assert.IsNotNull(((PeopleSearchResponse)result.Value).SearchRequestId);
