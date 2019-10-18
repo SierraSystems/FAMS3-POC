@@ -15,6 +15,5 @@ namespace SearchApi.Core.Providers
         /// </summary>
         public String Name { get; set; }
 
-
     }
 }

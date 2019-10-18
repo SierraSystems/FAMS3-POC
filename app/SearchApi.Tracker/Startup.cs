@@ -36,10 +36,7 @@ namespace SearchApi.Tracker
                 .AddJsonFile($"provider.configuration.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-
             IConfiguration configuration = builder.Build();
-
-            ConfigureProviders(services, configuration);
 
             ConfigureDbContext(services, configuration);
 
@@ -55,11 +52,6 @@ namespace SearchApi.Tracker
                 options.UseNpgsql(configuration.GetConnectionString("StateMachineContext")),
                     ServiceLifetime.Singleton, 
                     ServiceLifetime.Singleton);
-        }
-
-        public static void ConfigureProviders(IServiceCollection services, IConfiguration configuration)
-        {
-            services.Configure<List<Provider>>(options => configuration.GetSection("providers").Bind(options));
         }
 
         private static void ConfigureServiceBus(IServiceCollection services, IConfiguration configuration)
