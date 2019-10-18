@@ -2,11 +2,12 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-buster-slim AS base
 WORKDIR /app
 EXPOSE 80
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-bionic AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
 
 ARG PROJECT_NAME
 
-RUN dotnet tool install --global dotnet-ef
+RUN dotnet tool install -g dotnet-ef
+ENV PATH="/root/.dotnet/tools:${PATH}"
 
 WORKDIR /src
 
