@@ -35,8 +35,8 @@ namespace JobManager
         }
         public async void Stop()
         {
-           
-               await _schedulerService.Shutdown();
+            while (!_schedulerService.IsShutdown)
+                await _schedulerService.Shutdown();
         }
     }
     public interface IScheduleService

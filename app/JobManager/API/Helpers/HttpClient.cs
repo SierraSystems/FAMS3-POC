@@ -13,7 +13,7 @@ namespace JobManager.API.Helpers
             _client = new FlurlClient();
         }
 
-        public async Task<T> Get<T>(string baseUrl, string path, string key = null,object queryParams = null, object headers = null, object cookies = null)
+        public virtual async Task<T> Get<T>(string baseUrl, string path, string key = null,object queryParams = null, object headers = null, object cookies = null)
         {
             return await new Url(baseUrl)
                 .AppendPathSegment(path)
@@ -25,7 +25,7 @@ namespace JobManager.API.Helpers
                 .GetAsync().ReceiveJson<T>();
         }
 
-        public async Task<T> Post<T>(string baseUrl, string path, object payload = null, string key = null, object queryParams = null, object headers = null, object cookies = null)
+        public virtual async Task<T> Post<T>(string baseUrl, string path, object payload = null, string key = null, object queryParams = null, object headers = null, object cookies = null)
         {
         
                 return  await new Url(baseUrl)

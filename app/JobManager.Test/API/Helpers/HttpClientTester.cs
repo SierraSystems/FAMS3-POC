@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace JobManager.Test.API.Helpers
 {
-    public abstract class HttpClientTester
+    public  class HttpClientTester
     {
 
         private HttpClient _sut;
@@ -18,7 +18,7 @@ namespace JobManager.Test.API.Helpers
 
         }
         [Test]
-        public void check_object_is_not_null()
+        public void check_create_is_not_null()
         {
             Assert.IsInstanceOf<HttpClient>(_sut);
         }
