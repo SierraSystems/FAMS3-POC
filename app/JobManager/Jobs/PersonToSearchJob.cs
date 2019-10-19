@@ -4,17 +4,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using JobManager.API.Services;
 
 namespace JobManager.Jobs
 {
     [DisallowConcurrentExecution]
     public class PersonToSearchJob : IJob
     {
-        private readonly IPersonToSearch personToFind = new PersonToSearch();
 
+        private readonly ISearchService _searchService;
+   
+
+        public PersonToSearchJob(ISearchService searchService)
+        {
+            _searchService = searchService;
+        }
         public async Task Execute(IJobExecutionContext context)
         {
-            await Console.Out.WriteLineAsync(personToFind.Get().Count.ToString());
+          
+           var response =  await _searchService.InitiateSearch();
+            await Console.Out.WriteLineAsync(response.SearchRequestId.ToString());
 
         }
     }

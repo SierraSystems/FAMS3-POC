@@ -32,7 +32,7 @@ namespace JobManager
          
             var trigger = jobProvider.CreateTrigger();
             var jobdetail = jobProvider.CreateJobDetail();
-
+            
          
 
 
