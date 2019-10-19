@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SearchApi.Core.Contracts;
 using SearchApi.Core.Contracts.PersonSearch;
+using SearchApi.Core.Models;
 using SearchAPI.Models;
 
 namespace SearchAPI.Controllers
@@ -35,9 +36,9 @@ namespace SearchAPI.Controllers
         [Route("search")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PeopleSearchResponse), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> Search()
+        public async Task<IActionResult> Search([FromBody] PeopleSearchRequest peopleSearchRequest)
         {
-            var searchRequested = SearchRequested.Create();
+            var searchRequested = SearchRequested.Create(peopleSearchRequest);
 
             await this._busControl.Publish(searchRequested);
 

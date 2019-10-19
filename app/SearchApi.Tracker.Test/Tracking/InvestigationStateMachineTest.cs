@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Automatonymous.Testing;
@@ -6,6 +7,8 @@ using MassTransit.Testing;
 using NUnit.Framework;
 using SearchApi.Core.Contracts;
 using SearchApi.Core.Contracts.PersonSearch;
+using SearchApi.Core.Models;
+using SearchApi.Core.Providers;
 using SearchApi.Tracker.Tracking;
 
 namespace SearchApi.Tracker.Test.Tracking
@@ -22,14 +25,14 @@ namespace SearchApi.Tracker.Test.Tracking
 
             var harness = new InMemoryTestHarness();
 
-            _machine = new InvestigationStateMachine();
+            _machine = new InvestigationStateMachine(new List<Provider>());
 
             StateMachineSagaTestHarness<Investigation, InvestigationStateMachine> saga = harness.StateMachineSaga<Investigation, InvestigationStateMachine>(_machine);
 
 
             await harness.Start();
 
-            var searchRequestedEvent = SearchRequested.Create();
+            var searchRequestedEvent = SearchRequested.Create(new PeopleSearchRequest("test", "test", "test"));
 
             try
             {
