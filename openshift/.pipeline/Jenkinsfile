@@ -1,0 +1,28 @@
+#!/usr/bin/env groovy
+
+//ENV Vars
+def TOOLS_NAMESPACE = "frjeow-tools"
+def DEV_NAMESPACE = "frjeow-dev"
+def TEST_NAMESPACE = "frjeow-test"
+def PROD_NAMESPACE = "frjeow-prod"
+
+def RABBITMQ_SERVICE = "rabbitmq"
+
+def DOMAIN = "pathfinder.gov.bc.ca"
+def SUBDOMAIN = "fams3"
+
+//Pipeline
+node {
+
+ stage('Checkout'){
+     dir('simple_pipeline'){
+        checkout scm
+     }
+ }
+
+ stage('Build App') {
+    dir('simple_pipeline') {
+     sh "echo Pipeline"
+ }
+
+}
