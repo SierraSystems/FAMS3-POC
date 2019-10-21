@@ -1,0 +1,10 @@
+{
+  "providers": [
+    {
+      "name": "provider1"
+    },
+    {
+      "name":  "provider2" 
+    }
+  ]
+}

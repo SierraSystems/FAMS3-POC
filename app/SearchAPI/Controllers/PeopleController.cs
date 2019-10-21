@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SearchApi.Core.Contracts;
+using SearchApi.Core.Contracts.PersonSearch;
+using SearchApi.Core.Models;
 using SearchAPI.Models;
 
 namespace SearchAPI.Controllers
@@ -17,11 +17,11 @@ namespace SearchAPI.Controllers
     public class PeopleController : ControllerBase
     {
 
-        private readonly ISendEndpointProvider _sendEndpointProvider;
+        private readonly IBusControl _busControl;
 
-        public PeopleController(ISendEndpointProvider sendEndpointProvider)
+        public PeopleController(IBusControl busControl)
         {
-            this._sendEndpointProvider = sendEndpointProvider;
+            this._busControl = busControl;
         }
 
 
@@ -36,13 +36,13 @@ namespace SearchAPI.Controllers
         [Route("search")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PeopleSearchResponse), StatusCodes.Status202Accepted)]
-        public async Task<IActionResult> Search()
+        public async Task<IActionResult> Search([FromBody] PeopleSearchRequest peopleSearchRequest)
         {
-            var investigatePerson = InvestigatePerson.Create();
+            var searchRequested = SearchRequested.Create(peopleSearchRequest);
 
-            await this._sendEndpointProvider.Send(investigatePerson);
+            await this._busControl.Publish(searchRequested);
 
-            return Accepted(PeopleSearchResponse.Create(investigatePerson.OrderId));
+            return Accepted(PeopleSearchResponse.Create(searchRequested.CorrelationId));
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Features;
 using NUnit.Framework;
-using SearchAPI.Options;
+using SearchApi.Core.Options;
 
 namespace SearchAPI.Test.Options
 {
