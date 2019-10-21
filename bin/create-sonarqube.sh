@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 oc process -f openshift/sonarqube.bc.yaml \
     -p NAME=sonarqube \
     -p VERSION=v1 \
