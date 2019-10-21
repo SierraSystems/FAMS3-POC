@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DataModel.Models;
 using JobManager.API.Helpers;
-using JobManager.API.Models;
 using JobManager.API.Services;
 using Moq;
 using NUnit.Framework;

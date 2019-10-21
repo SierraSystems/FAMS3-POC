@@ -13,8 +13,8 @@ namespace JobManager
     {
         private readonly IFAMSScheduleFactory factory;
         private static  IScheduler _schedulerService;
-        private readonly IJobTrigger<PersonToSearchJob> trigger;
-        public ScheduleService(IFAMSScheduleFactory _factory, IJobTrigger<PersonToSearchJob> _trigger, IScheduler SchedulerService)
+        private readonly IJobTrigger trigger;
+        public ScheduleService(IFAMSScheduleFactory _factory, IJobTrigger _trigger, IScheduler SchedulerService)
         {
             factory = _factory;
             trigger = _trigger;

@@ -8,7 +8,7 @@ namespace JobManager.Test.Triggers
     public class JobTriggerTester
     {
 
-        private IJobTrigger<PersonToSearchJob> _trigger;
+        private IJobTrigger _trigger;
      
 
         [SetUp]

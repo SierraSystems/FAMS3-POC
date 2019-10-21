@@ -13,7 +13,7 @@ namespace JobManager.Test
         private ScheduleService _service;
         private IFAMSScheduleFactory _factory;
         private readonly IScheduler _schedulerService;
-        private IJobTrigger<PersonToSearchJob> _trigger;
+        private IJobTrigger _trigger;
 
         [SetUp]
         public void Setup()

@@ -1,5 +1,4 @@
-﻿using JobManager.Jobs;
-using JobManager.SchedulerFactory;
+﻿using JobManager.SchedulerFactory;
 using JobManager.Triggers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -23,7 +22,7 @@ namespace JobManager
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var schedulerProvider = serviceProvider.GetService<IFAMSScheduleFactory>();
-            var jobProvider = serviceProvider.GetService<IJobTrigger<PersonToSearchJob>>();
+            var jobProvider = serviceProvider.GetService<IJobTrigger>();
            
 
         

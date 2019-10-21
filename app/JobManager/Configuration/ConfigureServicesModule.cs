@@ -14,7 +14,7 @@ namespace JobManager.Configuration
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration = null)
         {
             services.AddTransient<IFAMSScheduleFactory, FAMSScheduleFactory>();
-            services.AddTransient<IJobTrigger<PersonToSearchJob>, PersonToSearchTrigger<PersonToSearchJob>>();
+            services.AddTransient<IJobTrigger, PersonToSearchTrigger<PersonToSearchJob>>();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿
 
 using System.Threading.Tasks;
+using DataModel.Models;
 using JobManager.API.Helpers;
-using JobManager.API.Models;
 
 namespace JobManager.API.Services
 {
