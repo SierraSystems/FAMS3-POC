@@ -1,15 +1,8 @@
-﻿using JobManager.Jobs;
-using JobManager.SchedulerFactory;
+﻿using JobManager.SchedulerFactory;
 using JobManager.Triggers;
 using Microsoft.Extensions.DependencyInjection;
-using Quartz;
-using Quartz.Impl;
 using System;
-using System.Collections.Specialized;
-using System.Threading;
 using System.Threading.Tasks;
-using JobManager.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace JobManager
 {
@@ -29,7 +22,7 @@ namespace JobManager
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var schedulerProvider = serviceProvider.GetService<IFAMSScheduleFactory>();
-            var jobProvider = serviceProvider.GetService<IJobTrigger<PersonToSearchJob>>();
+            var jobProvider = serviceProvider.GetService<IJobTrigger>();
            
 
         
@@ -38,7 +31,7 @@ namespace JobManager
          
             var trigger = jobProvider.CreateTrigger();
             var jobdetail = jobProvider.CreateJobDetail();
-
+            
          
 
 

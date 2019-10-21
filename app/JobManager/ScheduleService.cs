@@ -13,8 +13,8 @@ namespace JobManager
     {
         private readonly IFAMSScheduleFactory factory;
         private static  IScheduler _schedulerService;
-        private readonly IJobTrigger<PersonToSearchJob> trigger;
-        public ScheduleService(IFAMSScheduleFactory _factory, IJobTrigger<PersonToSearchJob> _trigger, IScheduler SchedulerService)
+        private readonly IJobTrigger trigger;
+        public ScheduleService(IFAMSScheduleFactory _factory, IJobTrigger _trigger, IScheduler SchedulerService)
         {
             factory = _factory;
             trigger = _trigger;
@@ -36,7 +36,7 @@ namespace JobManager
         public async void Stop()
         {
             while (!_schedulerService.IsShutdown)
-               await _schedulerService.Shutdown();
+                await _schedulerService.Shutdown();
         }
     }
     public interface IScheduleService

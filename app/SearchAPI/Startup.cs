@@ -24,9 +24,11 @@ namespace SearchAPI
         {
             services
                 .AddMvc(option => option.EnableEndpointRouting = false)
+
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
                 .AddNewtonsoftJson()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-                
+
             
             services.AddHealthChecks();
 

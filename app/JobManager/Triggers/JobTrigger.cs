@@ -1,12 +1,9 @@
 ﻿using JobManager.Jobs;
 using Quartz;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace JobManager.Triggers
 {
-    public class PersonToSearchTrigger<T> : IJobTrigger<T>
+    public class PersonToSearchTrigger<T> : IJobTrigger
     {
         public ITrigger CreateTrigger()
         {
@@ -21,7 +18,7 @@ namespace JobManager.Triggers
 
     }
 
-    public interface IJobTrigger<T>
+    public interface IJobTrigger
     {
         ITrigger CreateTrigger();
         IJobDetail CreateJobDetail();
