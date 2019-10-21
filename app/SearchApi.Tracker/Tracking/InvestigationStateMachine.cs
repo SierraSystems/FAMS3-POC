@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Automatonymous;
+using Microsoft.Extensions.Options;
 using SearchApi.Core.Contracts;
 using SearchApi.Core.Contracts.PersonSearch;
+using SearchApi.Core.Providers;
 
 namespace SearchApi.Tracker.Tracking
 {
@@ -10,7 +13,8 @@ namespace SearchApi.Tracker.Tracking
     /// </summary>
     public class InvestigationStateMachine : MassTransitStateMachine<Investigation>
     {
-        public InvestigationStateMachine()
+
+        public InvestigationStateMachine(List<Provider> providers)
         {
 
             Event(() => SearchRequested , 
@@ -25,6 +29,7 @@ namespace SearchApi.Tracker.Tracking
                     {
                         context.Instance.SearchRequestId = context.Data.CorrelationId; 
                         Console.WriteLine($"SearchRequeted: {context.Data.CorrelationId}");
+                        Console.WriteLine(providers.Count);
                     })
                     .TransitionTo(Started));
 

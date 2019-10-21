@@ -4,7 +4,7 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
 
 ## Note
 
-- Projects are to be based on .NET Core 2.2
+- Projects are to be based on .NET Core 3.0
 - Message Broker is rabbitMq
 - All projects should have a corresponding test project
 
@@ -53,6 +53,25 @@ The traker stores the `investigationState` in the StateMachine Database.
 ### SearchAPI
 
 _This is the API that will be called by the Scheduler Plugin to search for person sought_
+
+### SearchApi.Tracker
+
+The search api tracker application is responsible for tracking investigation on a Person.
+
+you can configure the provider in the [provider.configuration.json](app/SearchApi.Tracker/provider.configuration.json) following this specification
+
+```json
+{
+  "providers": [
+    {
+      "name": "provider1"
+    },
+    {
+      "name":  "provider2" 
+    }
+  ]
+}
+```
 
 ### SearchAPI.Test
 

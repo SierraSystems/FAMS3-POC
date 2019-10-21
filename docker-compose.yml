@@ -47,10 +47,6 @@ services:
       args:
         PROJECT_NAME: SearchApi.Tracker
     environment:
-      RABBITMQ__HOST: rabbitmq
-      RABBITMQ__PORT: 5672
-      RABBITMQ__USERNAME: guest
-      RABBITMQ__PASSWORD: guest
       CONNECTIONSTRINGS__STATEMACHINECONTEXT: Host=postgres;Database=state_machine;Username=admin;Password=admin
       WAIT_HOSTS: postgres:5432
     command: sh -c "/wait && dotnet ef database update"
