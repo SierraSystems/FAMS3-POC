@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JobManager.API.Services;
 using JobManager.Jobs;
 using JobManager.SchedulerFactory;
 using JobManager.Triggers;
@@ -15,6 +16,7 @@ namespace JobManager.Configuration
         {
             services.AddTransient<IFAMSScheduleFactory, FAMSScheduleFactory>();
             services.AddTransient<IJobTrigger, PersonToSearchTrigger<PersonToSearchJob>>();
+            services.AddTransient<ISearchService, SearchService>();
         }
     }
 }

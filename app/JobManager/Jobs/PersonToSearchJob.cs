@@ -1,29 +1,24 @@
 ﻿using Quartz;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
+using DataModel.Models;
 using JobManager.API.Services;
 
 namespace JobManager.Jobs
 {
-    [DisallowConcurrentExecution]
+   
     public class PersonToSearchJob : IJob
     {
 
-        private readonly ISearchService _searchService;
-   
-
-        public PersonToSearchJob(ISearchService searchService)
-        {
-            _searchService = searchService;
-        }
+       
         public async Task Execute(IJobExecutionContext context)
         {
-          
-           var response =  await _searchService.InitiateSearch();
-            await Console.Out.WriteLineAsync(response.SearchRequestId.ToString());
+            var _request = (PeopleSearchRequest)context.JobDetail.JobDataMap.Get("person");
+            Console.WriteLine("back from dynamics - well not exactly - with records " + _request.Email);
+            Console.WriteLine("sending for search - for real " + _request.Email);
+            //var response =  await _searchService.InitiateSearch(_request);
+            //Console.WriteLine("back from  search - for real " + _request.Email);
+            //await Console.Out.WriteLineAsync(response.SearchRequestId.ToString());
 
         }
     }

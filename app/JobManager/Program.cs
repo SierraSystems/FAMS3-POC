@@ -2,15 +2,15 @@
 using JobManager.Triggers;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
+using DataModel.Models;
 
 namespace JobManager
 {
-
-  
     class Program
     {
-        static async Task  Main(string[] args)
+        static  async Task  Main(string[] args)
         {
 
             Console.WriteLine("Starting Schedule Job API Tracker");
@@ -23,23 +23,21 @@ namespace JobManager
 
             var schedulerProvider = serviceProvider.GetService<IFAMSScheduleFactory>();
             var jobProvider = serviceProvider.GetService<IJobTrigger>();
-           
 
-        
-            var scheduler = await schedulerProvider.CreateScheduler();
-
-         
+            var scheduler = await  schedulerProvider.CreateScheduler();
             var trigger = jobProvider.CreateTrigger();
-            var jobdetail = jobProvider.CreateJobDetail();
-            
-         
 
+            var jobDetail = jobProvider.CreateJobDetail(new PeopleSearchRequest("John", "Doe", "john.doe@getme.com"));
 
-            await scheduler.ScheduleJob(jobdetail, trigger);
+            await scheduler.ScheduleJob(jobDetail, trigger);
 
-            await scheduler.Start();
+             await scheduler.Start();
 
-            Console.ReadKey();
+            Thread.Sleep(TimeSpan.FromMinutes(5));
+
+            Console.WriteLine("Stopping Schedule Job API Tracker");
+
+            await scheduler.Shutdown();
         }
     }
 }

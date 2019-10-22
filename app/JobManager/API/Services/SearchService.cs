@@ -20,14 +20,14 @@ namespace JobManager.API.Services
        }
 
 
-       public Task<PeopleSearchResponse> InitiateSearch()
+       public Task<PeopleSearchResponse> InitiateSearch(PeopleSearchRequest request)
         {
-            return _client.Post<PeopleSearchResponse>(_baseUrl, _path);
+            return _client.Post<PeopleSearchResponse>(_baseUrl, _path, request);
         }
     }
 
    public interface ISearchService
    {
-       Task<PeopleSearchResponse> InitiateSearch();
+       Task<PeopleSearchResponse> InitiateSearch(PeopleSearchRequest request);
    }
 }
