@@ -35,20 +35,36 @@ node {
         -p DOTNET_STARTUP_PROJECT=app/SearchAPI/SearchAPI.csproj \
         -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
 
-   sh "echo Wait for the build to finish"
-   timeout(time: 180, unit: 'SECONDS') {
+   sh "echo Wait for the builds to finish"
+   timeout(time: 10, unit: 'MINUTES') {
     openshift.withCluster() {
      openshift.withProject("${TOOLS_NAMESPACE}") {
-      def searchapiSelector = openshift.selector("bc", "searchapi")
+      def searchapiSelector = openshift.selector("bc", "${SEARCH_API}")
       searchapiSelector.object()
       builds = searchapiSelector.related("builds")
       builds.watch {
-       // 'it' is bound to the builds selector.
-       // Continue to watch until at least one build is detected
        if (it.count() == 0) {
         return false
        }
-       // Print out the build's name and terminate the watch
+       return true
+      }
+      builds.untilEach {
+       return it.object().status.phase == "Complete"
+      }
+     }
+    }
+   }
+   sh "echo Wait for runtime build to finish"
+   timeout(time: 10, unit: 'MINUTES') {
+    openshift.withCluster() {
+     openshift.withProject("${TOOLS_NAMESPACE}") {
+      def searchapiSelector = openshift.selector("bc", "${SEARCH_API}-build")
+      searchapiSelector.object()
+      builds = searchapiSelector.related("builds")
+      builds.watch {
+       if (it.count() == 0) {
+        return false
+       }
        return true
       }
       builds.untilEach {
@@ -59,5 +75,32 @@ node {
    }
   }
  }
+
+ stage('Promote to DEV') {
+  openshift.withCluster() {
+   openshift.tag("searchapi:latest", "searchapi:dev")
+  }
+ }
+
+ // stage('Deploy SearchAPI') {
+ //  dir('simple_pipeline') {
+ //   sh "oc process -f openshift/templates/searchapi.dc.yaml \
+ //                  -p PROMETHEUS_SERVICE_NAME=${PROMETHEUS_SERVICE} \
+ //                  -p ROUTE_HOST=${PROMETHEUS_SERVICE} \
+ //                  -p ROUTE_SUBDOMAIN=${SUBDOMAIN} \
+ //                  -p NAMESPACE=${DEV_NAMESPACE} | oc apply -f - -n ${DEV_NAMESPACE}"
+
+ //   sh "echo Wait for service to be up"
+ //   timeout(time: 180, unit: 'SECONDS') {
+ //    openshift.withCluster() {
+ //     openshift.withProject("${DEV_NAMESPACE}") {
+ //      def dc = openshift.selector('deployment', "${PROMETHEUS_SERVICE}")
+ //      // this will wait until the desired replicas are available
+ //      dc.rollout().status()
+ //     }
+ //    }
+ //   }
+ //  }
+ // }
 
 }
