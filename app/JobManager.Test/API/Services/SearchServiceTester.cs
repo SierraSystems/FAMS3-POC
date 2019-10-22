@@ -13,14 +13,14 @@ namespace JobManager.Test.API.Services
 
         private SearchService _sut;
         private Mock<PeopleSearchResponse> _people;
-        private Mock<FAMSHttpClient> _client;
+        private Mock<HttpClient> _client;
         private readonly string _baseUrl = "http://localhost:6341/";
         private readonly string _path = "Search";
 
         [SetUp]
         public void Setup()
         {
-            _client = new Mock<FAMSHttpClient>();
+            _client = new Mock<HttpClient>();
             _client.Setup(x => x.Post<PeopleSearchResponse>(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<object>(), It.IsAny<object>())).Returns(Task.FromResult( PeopleSearchResponse.Create(Guid.NewGuid())));
             _sut = new SearchService(_client.Object,_baseUrl,_path);
         }

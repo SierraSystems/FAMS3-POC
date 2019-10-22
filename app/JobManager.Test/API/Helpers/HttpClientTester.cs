@@ -6,13 +6,13 @@ namespace JobManager.Test.API.Helpers
     public  class HttpClientTester
     {
 
-        private FAMSHttpClient _sut;
+        private HttpClient _sut;
    
 
         [SetUp]
         public void Setup ()
         {
-            _sut = new FAMSHttpClient();
+            _sut = new HttpClient();
 
 
 
@@ -20,7 +20,7 @@ namespace JobManager.Test.API.Helpers
         [Test]
         public void check_create_is_not_null()
         {
-            Assert.IsInstanceOf<FAMSHttpClient>(_sut);
+            Assert.IsInstanceOf<HttpClient>(_sut);
         }
     }
 

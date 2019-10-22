@@ -8,11 +8,11 @@ namespace JobManager.API.Services
 {
    public class SearchService : ISearchService
    {
-       private readonly FAMSHttpClient _client;
+       private readonly HttpClient _client;
        private readonly string _baseUrl;
        private readonly string _path;
 
-       public SearchService(FAMSHttpClient client, string baseUrl, string path)
+       public SearchService(HttpClient client, string baseUrl, string path)
        {
            _client = client;
            _baseUrl = baseUrl;
