@@ -25,38 +25,39 @@ node {
  }
 
  stage('Build SearchAPI') {
-  sh "ls -lha openshift/templates"
+  dir('simple_pipeline') {
+   sh "ls -lha openshift/templates"
 
-  sh "oc process -f openshift/templates/searchapi.bc.yaml \
-       -p NAME=${SEARCH_API} \
-       -p SOURCE_REPOSITORY_URL=${GIT_URI} \
-       -p SOURCE_REPOSITORY_REF=${GIT_REF} \
-       -p CONTEXT_DIR=app \
-       -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
+   sh "oc process -f openshift/templates/searchapi.bc.yaml \
+        -p NAME=${SEARCH_API} \
+        -p SOURCE_REPOSITORY_URL=${GIT_URI} \
+        -p SOURCE_REPOSITORY_REF=${GIT_REF} \
+        -p CONTEXT_DIR=app \
+        -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
 
-  sh "echo Wait for the build to finish"
-  timeout(time: 180, unit: 'SECONDS') {
-   openshift.withCluster() {
-    openshift.withProject("${DEV_NAMESPACE}") {
-     def searchapiSelector = openshift.selector("bc", "searchapi")
-     searchapiSelector.object()
-     builds = searchapiSelector.related("builds")
-     builds.watch {
-      // 'it' is bound to the builds selector.
-      // Continue to watch until at least one build is detected
-      if (it.count() == 0) {
-       return false
+   sh "echo Wait for the build to finish"
+   timeout(time: 180, unit: 'SECONDS') {
+    openshift.withCluster() {
+     openshift.withProject("${DEV_NAMESPACE}") {
+      def searchapiSelector = openshift.selector("bc", "searchapi")
+      searchapiSelector.object()
+      builds = searchapiSelector.related("builds")
+      builds.watch {
+       // 'it' is bound to the builds selector.
+       // Continue to watch until at least one build is detected
+       if (it.count() == 0) {
+        return false
+       }
+       // Print out the build's name and terminate the watch
+       return true
       }
-      // Print out the build's name and terminate the watch
-      return true
-     }
-     builds.untilEach {
-      return it.object().status.phase == "Complete"
+      builds.untilEach {
+       return it.object().status.phase == "Complete"
+      }
      }
     }
    }
   }
-
  }
 
 }
