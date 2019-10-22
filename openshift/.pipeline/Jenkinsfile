@@ -38,7 +38,7 @@ node {
    sh "echo Wait for the build to finish"
    timeout(time: 180, unit: 'SECONDS') {
     openshift.withCluster() {
-     openshift.withProject("${DEV_NAMESPACE}") {
+     openshift.withProject("${TOOLS_NAMESPACE}") {
       def searchapiSelector = openshift.selector("bc", "searchapi")
       searchapiSelector.object()
       builds = searchapiSelector.related("builds")
