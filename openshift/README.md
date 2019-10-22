@@ -33,3 +33,8 @@ CPU_LIMIT
 MEMORY_LIMIT
 CPU_REQUEST
 MEMORY_REQUEST
+
+
+# Images
+
+https://github.com/redhat-developer/s2i-dotnetcore
