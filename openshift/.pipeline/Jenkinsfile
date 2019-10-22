@@ -39,25 +39,24 @@ node {
    openshift.withCluster() {
     openshift.withProject("${DEV_NAMESPACE}") {
      def searchapiSelector = openshift.selector("bc", "searchapi")
-     try {
-      searchapiSelector.object()
-      builds = searchapiSelector.related("builds")
-      builds.watch {
-       // 'it' is bound to the builds selector.
-       // Continue to watch until at least one build is detected
-       if (it.count() == 0) {
-        return false
-       }
-       // Print out the build's name and terminate the watch
-       return true
+     searchapiSelector.object()
+     builds = searchapiSelector.related("builds")
+     builds.watch {
+      // 'it' is bound to the builds selector.
+      // Continue to watch until at least one build is detected
+      if (it.count() == 0) {
+       return false
       }
-      builds.untilEach {
-       return it.object().status.phase == "Complete"
-      }
+      // Print out the build's name and terminate the watch
+      return true
+     }
+     builds.untilEach {
+      return it.object().status.phase == "Complete"
      }
     }
    }
   }
+
  }
 
 }
