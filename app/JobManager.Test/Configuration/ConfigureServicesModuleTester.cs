@@ -1,13 +1,9 @@
 ﻿using JobManager.Configuration;
-using JobManager.Jobs;
 using JobManager.SchedulerFactory;
 using JobManager.Triggers;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace JobManager.Test.Configuration
 {
@@ -21,7 +17,7 @@ namespace JobManager.Test.Configuration
 
             Assert.IsTrue(serviceCollection.Any(x => x.ServiceType == typeof(IFAMSScheduleFactory)));
 
-            Assert.IsTrue(serviceCollection.Any(x => x.ServiceType == typeof(IJobTrigger<PersonToSearchJob>)));
+            Assert.IsTrue(serviceCollection.Any(x => x.ServiceType == typeof(IJobTrigger)));
 
 
         }

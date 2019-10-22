@@ -1,8 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Moq;
 using JobManager.SchedulerFactory;
 using JobManager.Triggers;
 using JobManager.Jobs;
@@ -15,8 +12,8 @@ namespace JobManager.Test
 
         private ScheduleService _service;
         private IFAMSScheduleFactory _factory;
-        private  IScheduler _schedulerService;
-        private IJobTrigger<PersonToSearchJob> _trigger;
+        private readonly IScheduler _schedulerService;
+        private IJobTrigger _trigger;
 
         [SetUp]
         public void Setup()

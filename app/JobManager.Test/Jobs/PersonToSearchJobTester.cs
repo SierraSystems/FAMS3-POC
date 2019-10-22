@@ -1,8 +1,6 @@
-﻿using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Quartz;
 using JobManager.Jobs;
-using System.Threading.Tasks;
 
 namespace JobManager.Test.Jobs
 {
