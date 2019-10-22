@@ -31,7 +31,7 @@ node {
        searchapiSelector.object()
        builds = searchapiSelector.related("builds")
       } catch (Throwable t) {
-       nb = openshift.newBuild("https://github.com/SierraSystems/FAMS3-POC/#add-cicd", "--context-dir=app", "--name=searchapi")
+       nb = openshift.newBuild("https://github.com/SierraSystems/FAMS3-POC/#feature/add-cicd", "--context-dir=app", "--name=searchapi")
 
        // Print out information about the objects created by newBuild
        echo "newBuild created: ${nb.count()} objects : ${nb.names()}"
