@@ -4,11 +4,11 @@ using Flurl.Http;
 
 namespace JobManager.API.Helpers
 {
-   public  class HttpClient
+   public  class FAMSHttpClient
     {
         private readonly FlurlClient _client;
         private const int HttpRequestTimeout = 10;
-        public HttpClient ()
+        public FAMSHttpClient ()
         {
             _client = new FlurlClient();
         }
