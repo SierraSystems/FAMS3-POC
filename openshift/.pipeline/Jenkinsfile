@@ -7,9 +7,13 @@ def TEST_NAMESPACE = "frjeow-test"
 def PROD_NAMESPACE = "frjeow-prod"
 
 def RABBITMQ_SERVICE = "rabbitmq"
+def SEARCH_API = "searchapi"
 
 def DOMAIN = "pathfinder.gov.bc.ca"
 def SUBDOMAIN = "fams3"
+
+def GIT_URI = "https://github.com/SierraSystems/FAMS3-POC.git"
+def GIT_REF = "feature/add-cicd"
 
 //Pipeline
 node {
@@ -20,26 +24,24 @@ node {
   }
  }
 
- stage('Build App') {
-  dir('simple_pipeline') {
-   checkout scm
-   timeout(time: 600, unit: 'SECONDS') {
-    openshift.withCluster() {
-     openshift.withProject("${TOOLS_NAMESPACE}") {
-      def searchapiSelector = openshift.selector("bc", "searchapi")
-      try {
-       searchapiSelector.object()
-       builds = searchapiSelector.related("builds")
-      } catch (Throwable t) {
-       nb = openshift.newBuild("https://github.com/SierraSystems/FAMS3-POC/#feature/add-cicd", "--context-dir=app", "--name=searchapi")
+ stage('Build SearchAPI') {
+  sh "ls -lha openshift/templates"
 
-       // Print out information about the objects created by newBuild
-       echo "newBuild created: ${nb.count()} objects : ${nb.names()}"
+  sh "oc process -f openshift/templates/searchapi.bc.yaml \
+       -p NAME=${SEARCH_API} \
+       -p SOURCE_REPOSITORY_URL=${GIT_URI} \
+       -p SOURCE_REPOSITORY_REF=${GIT_REF} \
+       -p CONTEXT_DIR=app \
+       -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
 
-       // Filter non-BuildConfig objects and create selector which will find builds related to the BuildConfig
-       builds = nb.narrow("bc").related("builds")
-      }
-      openshift.selector("bc", "searchapi").startBuild("--wait")
+  sh "echo Wait for the build to finish"
+  timeout(time: 180, unit: 'SECONDS') {
+   openshift.withCluster() {
+    openshift.withProject("${DEV_NAMESPACE}") {
+     def searchapiSelector = openshift.selector("bc", "searchapi")
+     try {
+      searchapiSelector.object()
+      builds = searchapiSelector.related("builds")
       builds.watch {
        // 'it' is bound to the builds selector.
        // Continue to watch until at least one build is detected
@@ -47,20 +49,15 @@ node {
         return false
        }
        // Print out the build's name and terminate the watch
-       echo "Detected new builds created by buildconfig: ${it.names()}"
        return true
       }
-
-      echo "Waiting for builds to complete..."
-
-      // Like a watch, but only terminate when at least one selected object meets condition
       builds.untilEach {
        return it.object().status.phase == "Complete"
       }
      }
     }
    }
-
   }
  }
+
 }
