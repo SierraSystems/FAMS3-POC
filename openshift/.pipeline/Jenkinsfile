@@ -32,7 +32,7 @@ node {
         -p NAME=${SEARCH_API} \
         -p SOURCE_REPOSITORY_URL=${GIT_URI} \
         -p SOURCE_REPOSITORY_REF=${GIT_REF} \
-        -p CONTEXT_DIR=app \
+        -p DOTNET_STARTUP_PROJECT=app/SearchAPI/SearchAPI.csproj \
         -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
 
    sh "echo Wait for the build to finish"
