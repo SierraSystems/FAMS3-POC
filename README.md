@@ -20,6 +20,7 @@ The `SearchApi` takes a piece of information from a person and will execute a `s
     ├── .gitignore              # Git ignore.
     ├── docker-compose.yml      # Docker Compose definition.
     └── README.md               # This file.
+    └── openshift               # Folder contains pipeline definition for openshift
 
 ## Run
 
