@@ -82,25 +82,25 @@ node {
   }
  }
 
- // stage('Deploy SearchAPI') {
- //  dir('simple_pipeline') {
- //   sh "oc process -f openshift/templates/searchapi.dc.yaml \
- //                  -p PROMETHEUS_SERVICE_NAME=${PROMETHEUS_SERVICE} \
- //                  -p ROUTE_HOST=${PROMETHEUS_SERVICE} \
- //                  -p ROUTE_SUBDOMAIN=${SUBDOMAIN} \
- //                  -p NAMESPACE=${DEV_NAMESPACE} | oc apply -f - -n ${DEV_NAMESPACE}"
+ stage('Deploy SearchAPI') {
+  dir('simple_pipeline') {
+   sh "oc process -f openshift/templates/searchapi.dc.yaml \
+                  -p NAME=${SEARCH_API} \
+                  -p APPLICATION_DOMAIN=${SUBDOMAIN}-dev-${DOMAIN} \
+                  -p NAMESPACE=${TOOLS_NAMESPACE} \
+                  -p TAG=dev | oc apply -f - -n ${DEV_NAMESPACE}"
 
- //   sh "echo Wait for service to be up"
- //   timeout(time: 180, unit: 'SECONDS') {
- //    openshift.withCluster() {
- //     openshift.withProject("${DEV_NAMESPACE}") {
- //      def dc = openshift.selector('deployment', "${PROMETHEUS_SERVICE}")
- //      // this will wait until the desired replicas are available
- //      dc.rollout().status()
- //     }
- //    }
- //   }
- //  }
- // }
+   sh "echo Wait for service to be up"
+   timeout(time: 180, unit: 'SECONDS') {
+    openshift.withCluster() {
+     openshift.withProject("${DEV_NAMESPACE}") {
+      def dc = openshift.selector('deployment', "${SEARCH_API}")
+      // this will wait until the desired replicas are available
+      dc.rollout().status()
+     }
+    }
+   }
+  }
+ }
 
 }

@@ -32,13 +32,19 @@ parameters:
       The exposed hostname that will route to the .NET Core service, if left
       blank a value will be defaulted.
     value: ""
+  - name: TAG
+    displayName: Image Tag
+    description:
+      The image tag to be deployed from the registry.
+    required: true
+    value: latest
 objects:
   - kind: Route
     apiVersion: v1
     metadata:
       name: "${NAME}"
     spec:
-      host: "${APPLICATION_DOMAIN}"
+      host: "${NAME}-${APPLICATION_DOMAIN}"
       to:
         kind: Service
         name: "${NAME}"
@@ -72,7 +78,7 @@ objects:
               - dotnet-runtime-app
             from:
               kind: ImageStreamTag
-              name: "${NAME}:latest"
+              name: "${NAME}:${TAG}"
         - type: ConfigChange
       replicas: 1
       selector:
