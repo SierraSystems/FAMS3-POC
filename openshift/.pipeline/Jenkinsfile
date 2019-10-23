@@ -13,7 +13,7 @@ def DOMAIN = "pathfinder.gov.bc.ca"
 def SUBDOMAIN = "fams3"
 
 def GIT_URI = "https://github.com/SierraSystems/FAMS3-POC.git"
-def GIT_REF = "feature/add-cicd"
+def GIT_REF = "master"
 
 def BUILD_MEMORY = "1Gi"
 def RUN_MEMORY = "128Mi"
