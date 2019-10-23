@@ -64,7 +64,7 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: "${NAME}-runtime"
+      name: "${NAME}"
       annotations:
         description: Defines how to deploy the application server
     spec:
