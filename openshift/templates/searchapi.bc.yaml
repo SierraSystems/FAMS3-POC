@@ -90,6 +90,10 @@ parameters:
 - name: DOTNET_RESTORE_CONFIGFILE
   displayName: NuGet.Config file
   description: Set this to a Nuget.Config file. Cannot be combined with DOTNET_RESTORE_SOURCES.
+- name: DOTNET_INCREMENTAL
+  displayName: Incremental builds
+  description: Set this to true if you want to reuse build artefacts between builds.
+  value: true
 objects: 
   - kind: ImageStream
     apiVersion: v1
@@ -140,6 +144,8 @@ objects:
               value: "true"
             - name: DOTNET_TOOLS
               value: "${DOTNET_TOOLS}"
+            - name: DOTNET_INCREMENTAL
+              value: "${DOTNET_INCREMENTAL}"
       output:
         to:
           kind: ImageStreamTag

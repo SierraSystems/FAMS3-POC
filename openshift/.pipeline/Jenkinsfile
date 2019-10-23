@@ -15,6 +15,9 @@ def SUBDOMAIN = "fams3"
 def GIT_URI = "https://github.com/SierraSystems/FAMS3-POC.git"
 def GIT_REF = "feature/add-cicd"
 
+def BUILD_MEMORY = "1Gi"
+def RUN_MEMORY = "128Mi"
+
 //Pipeline
 node {
 
@@ -33,6 +36,7 @@ node {
         -p SOURCE_REPOSITORY_URL=${GIT_URI} \
         -p SOURCE_REPOSITORY_REF=${GIT_REF} \
         -p DOTNET_STARTUP_PROJECT=app/SearchAPI/SearchAPI.csproj \
+        -p MEMORY_LIMIT=${BUILD_MEMORY} \
         -p NAMESPACE=${TOOLS_NAMESPACE} | oc apply -f - -n ${TOOLS_NAMESPACE}"
 
    sh "echo Wait for the builds to finish"
@@ -90,6 +94,7 @@ node {
    sh "oc process -f openshift/templates/searchapi.dc.yaml \
                   -p NAME=${SEARCH_API} \
                   -p APPLICATION_DOMAIN=${SUBDOMAIN}-dev-${DOMAIN} \
+                  -p MEMORY_LIMIT=${RUN_MEMORY} \
                   -p NAMESPACE=${TOOLS_NAMESPACE} \
                   -p TAG=dev | oc apply -f - -n ${DEV_NAMESPACE}"
 
