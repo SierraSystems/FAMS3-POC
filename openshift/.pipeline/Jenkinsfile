@@ -58,7 +58,7 @@ node {
    timeout(time: 10, unit: 'MINUTES') {
     openshift.withCluster() {
      openshift.withProject("${TOOLS_NAMESPACE}") {
-      def searchapiSelector = openshift.selector("bc", "${SEARCH_API}")
+      def searchapiSelector = openshift.selector("bc", "${SEARCH_API}-runtime")
       searchapiSelector.object()
       builds = searchapiSelector.related("builds")
       builds.watch {
