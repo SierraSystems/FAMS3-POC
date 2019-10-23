@@ -78,12 +78,15 @@ node {
 
  stage('Promote to DEV') {
   openshift.withCluster() {
+   sh "echo Tagging image for DEV"
    openshift.tag("searchapi:latest", "searchapi:dev")
   }
  }
 
  stage('Deploy SearchAPI') {
   dir('simple_pipeline') {
+   sh "echo Creating DeploymentConfig in Dev"
+
    sh "oc process -f openshift/templates/searchapi.dc.yaml \
                   -p NAME=${SEARCH_API} \
                   -p APPLICATION_DOMAIN=${SUBDOMAIN}-dev-${DOMAIN} \
