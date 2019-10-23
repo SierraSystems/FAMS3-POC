@@ -102,7 +102,7 @@ node {
    timeout(time: 180, unit: 'SECONDS') {
     openshift.withCluster() {
      openshift.withProject("${DEV_NAMESPACE}") {
-      def dc = openshift.selector('deployment', "${SEARCH_API}")
+      def dc = openshift.selector('dc', "${SEARCH_API}")
       // this will wait until the desired replicas are available
       dc.rollout().status()
      }
