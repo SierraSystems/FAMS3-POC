@@ -95,20 +95,6 @@ objects:
               image: " "
               ports:
                 - containerPort: 8080
-              livenessProbe:
-                httpGet:
-                  path: "/"
-                  port: 8080
-                  scheme: HTTP
-                initialDelaySeconds: 40
-                timeoutSeconds: 15
-              readinessProbe:
-                httpGet:
-                  path: "/"
-                  port: 8080
-                  scheme: HTTP
-                initialDelaySeconds: 10
-                timeoutSeconds: 30
               resources:
                 limits:
                   memory: "${MEMORY_LIMIT}"
