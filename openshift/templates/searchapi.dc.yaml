@@ -78,7 +78,8 @@ objects:
               - dotnet-runtime-app
             from:
               kind: ImageStreamTag
-              name: "${NAMESPACE}/${NAME}:${TAG}"
+              namespace: "${NAMESPACE}"
+              name: "${NAME}:${TAG}"
         - type: ConfigChange
       replicas: 1
       selector:
